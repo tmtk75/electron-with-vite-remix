@@ -2,21 +2,30 @@
   "name": "rsbuild-project",
   "private": true,
   "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.mjs",
   "scripts": {
-    "dev": "rsbuild dev -c src/renderer/rsbuilc.config.ts -r .",
-    "build": "rsbuild build",
-    "preview": "rsbuild preview"
+    "dev": "TBD",
+    "build": "vite build"
   },
   "dependencies": {
+    "electron": "^33.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.0.19",
-    "@rsbuild/plugin-react": "^1.0.6",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "typescript": "^5.6.3"
+    "camelcase": "^8.0.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vite-plugin-node-polyfills": "^0.22.0"
   },
-  "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
+  "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  }
 }
