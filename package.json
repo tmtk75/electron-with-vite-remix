@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "electron .",
     "dev:renderer": "vite dev ./src/renderer",
-    "build:main": "vite build --config ./src/main/vite.config.ts"
+    "build:main": "vite build --config ./src/main/vite.config.ts",
+    "build:renderer": "vite build ./src/renderer"
   },
   "dependencies": {
     "electron": "^33.2.0",

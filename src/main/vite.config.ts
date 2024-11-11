@@ -26,7 +26,8 @@ export default defineConfig({
       },
       external: ["electron"],
       output: {
-        entryFileNames: "[name].mjs",
+        dir: "out",
+        entryFileNames: "main/[name].mjs",
       },
     },
     minify: false,
