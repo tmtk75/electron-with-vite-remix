@@ -1,7 +1,7 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
-import { name } from "./package.json";
-import camelCase from "camelcase";
+// import { name } from "../../package.json";
+// import camelCase from "camelcase";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 const IGNORE_ROLLUP_WARNING_CODE = [
@@ -14,13 +14,13 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve("src/main/index.ts"),
-      name: camelCase(name, { pascalCase: true }),
+      // name: camelCase(name, { pascalCase: true }),
       formats: ["es"],
     },
     rollupOptions: {
       onwarn: (warning, defaultHandler) => {
         if (IGNORE_ROLLUP_WARNING_CODE.includes(warning?.code)) {
-          return;
+          // return;
         }
         defaultHandler(warning);
       },

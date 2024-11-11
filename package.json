@@ -5,8 +5,9 @@
   "type": "module",
   "main": "dist/index.mjs",
   "scripts": {
-    "dev": "TBD",
-    "build": "vite build"
+    "dev": "electron .",
+    "dev:renderer": "vite dev ./src/renderer",
+    "build:main": "vite build --config ./src/main/vite.config.ts"
   },
   "dependencies": {
     "electron": "^33.2.0",
