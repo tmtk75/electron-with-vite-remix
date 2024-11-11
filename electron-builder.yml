@@ -1,0 +1,95 @@
+#
+# https://www.electron.build/configuration/configuration
+#
+copyright: Copyright © 2024 ${author}
+asar: true
+
+appId: com.memodify.app
+productName: memodify
+directories:
+  buildResources: build
+  # buildResources: resource
+  output: dist
+files:
+  - "!**/*"
+  - package.json
+  - out
+  - node_modules
+asarUnpack:
+  - resources/**
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+mac:
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    - NSCameraUsageDescription: Application requests access to the device's camera.
+    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
+    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
+    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  notarize: false
+  target:
+    - zip
+    #- dmg
+    #- mas # not supported. Mac Application Store
+  publish: &publish
+    - provider: github
+      private: false
+      owner: memodify
+      repo: memodify.github.io
+dmg:
+  title: memodify
+  artifactName: ${name}-${version}.${ext}
+win:
+  executableName: memodify
+  target:
+    - zip
+    - nsis
+  publish: *publish
+linux:
+  maintainer: electronjs.org
+  category: Utility
+  target:
+    - zip
+    - deb
+    #- rpm # not supported
+    #- snap # not supported
+    - AppImage
+  publish: *publish
+appImage:
+  artifactName: ${name}-${version}.${ext}
+npmRebuild: false
+publish:
+  provider: generic
+  url: https://example.com/auto-updates
+electronDownload:
+  mirror: https://npmmirror.com/mirrors/electron/
+#
+#
+# Test with a self-signed certificate.
+#   https://zenn.dev/remon/articles/ba9eabc8370dc0
+#
+#
+# 1. keychain -> certificate assistant -> create
+#
+# $ security find-identity -v -p codesigning
+#  1) 3320324CB33D9024E1347222C09D50D0DF19C04F "memodify_self_signed_certificate"
+#     1 valid identities found
+#
+#
+#
+# To build
+#   $ CSC_LINK=memodify_self_signed_certificate yarn electron-builder ...
+#
+# To delete
+#   security delete-identity -c memodify_self_signed_certificate
+#
+#
+# ----
+#
+# To release onto App Store
+#   https://blog.katsubemakito.net/nodejs/electron/codesigning-macos
+#
+#
