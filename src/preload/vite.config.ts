@@ -13,21 +13,13 @@ export default defineConfig({
   plugins: [nodePolyfills()],
   build: {
     lib: {
-      entry: resolve("src/main/index.ts"),
-      // name: camelCase(name, { pascalCase: true }),
+      entry: resolve("src/preload/index.ts"),
       formats: ["es"],
     },
     rollupOptions: {
-      onwarn: (warning, defaultHandler) => {
-        if (IGNORE_ROLLUP_WARNING_CODE.includes(warning?.code)) {
-          // return;
-        }
-        defaultHandler(warning);
-      },
-      external: ["electron"],
       output: {
         dir: "out",
-        entryFileNames: "main/[name].mjs",
+        entryFileNames: "preload/[name].mjs",
       },
     },
     minify: false,
