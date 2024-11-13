@@ -1,25 +1,19 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
-// import { name } from "../../package.json";
-// import camelCase from "camelcase";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
-
-const IGNORE_ROLLUP_WARNING_CODE = [
-  "MISSING_GLOBAL_NAME",
-  "MISSING_NODE_BUILTINS",
-];
 
 export default defineConfig({
   plugins: [nodePolyfills()],
   build: {
     lib: {
       entry: resolve("src/preload/index.ts"),
-      formats: ["es"],
+      formats: ["cjs"],
     },
     rollupOptions: {
+      external: ["electron"],
       output: {
         dir: "out",
-        entryFileNames: "preload/[name].mjs",
+        entryFileNames: "preload/[name].cjs",
       },
     },
     minify: false,

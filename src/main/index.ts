@@ -1,36 +1,45 @@
-// import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow } from "electron";
+import { ipcMain } from "electron";
 import path, { dirname } from "node:path";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const createWindow = (BrowserWindow: any) => {
+const createWindow = () => {
   const win = new BrowserWindow({
     // width: 800,
     // height: 600,
     webPreferences: {
-      preload: path.join(__dirname, "../preload/index.mjs"),
+      preload: path.join(__dirname, "../preload/index.cjs"),
     },
   });
 
   win.loadURL("http://localhost:5173");
   // win.loadFile("index.html");
+
+  let count = 0;
+  setInterval(() => {
+    console.debug("send ping", count);
+    win.webContents.send("ping", `whoooooooh! ${count++}`);
+  }, 1000);
 };
 
-(async () => {
-  const { app, BrowserWindow } = await import("electron");
+app.whenReady().then(() => {
+  createWindow();
 
-  app.whenReady().then(() => {
-    createWindow(BrowserWindow);
-
-    app.on("activate", () => {
-      if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow(BrowserWindow);
-      }
-    });
+  app.on("activate", () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
   });
+});
 
-  app.on("window-all-closed", () => {
-    if (process.platform !== "darwin") app.quit();
-  });
-})();
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") app.quit();
+});
+
+// IPC sample
+ipcMain.handle("ipcTest", async (event, ...args) => {
+  console.debug({ event, ...args });
+  return "Result from main process";
+});

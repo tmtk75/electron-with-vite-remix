@@ -9,3 +9,5 @@
 * [x] build into ./out
 * [x] await import("electron")
 * [x] build:unpack
+* [x] IPC.
+* [ ] reload on change.
