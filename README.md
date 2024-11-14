@@ -11,3 +11,7 @@
 * [x] build:unpack
 * [x] IPC.
 * [ ] reload on change.
+  - [x] renderer: by vite dev. already.
+  - [ ] preload: by reload.
+  - [ ] main: by relauching.
+
