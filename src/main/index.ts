@@ -1,5 +1,5 @@
-import { app, BrowserWindow } from "electron";
-import { ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
+import { promises as fs } from "node:fs";
 import path, { dirname } from "node:path";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -43,3 +43,30 @@ ipcMain.handle("ipcTest", async (event, ...args) => {
   console.debug("ipc: renderer -> main", { event, ...args });
   return;
 });
+
+// Reload on change.
+let isQuited = false;
+
+const abort = new AbortController();
+const { signal } = abort;
+(async () => {
+  const dir = path.join(__dirname, "../../out");
+  try {
+    const watcher = fs.watch(dir, { signal, recursive: true });
+    for await (const event of watcher) {
+      if (!isQuited) {
+        isQuited = true;
+        app.relaunch();
+        app.quit();
+      }
+    }
+  } catch (err) {
+    if (!(err instanceof Error)) {
+      throw err;
+    }
+    if (err.name === "AbortError") {
+      console.debug("abort watching:", dir);
+      return;
+    }
+  }
+})();

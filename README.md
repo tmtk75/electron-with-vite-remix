@@ -12,9 +12,11 @@
 * [x] IPC.
   - [x] main -> renderer
   - [x] renderer -> main
-* [ ] reload on change.
+* [x] reload on change.
   - [x] renderer: by vite dev. already.
-  - [x] preload: by reload.
-  - [ ] main: by relauching.
+  - [x] preload: by reload (if code changes).
+  - [x] main: by relauching (if code changes).
 * [ ] auto detect listening port.
 * [ ] save window state (position and size)
+* [ ] rebuild main and preload on change.
+
