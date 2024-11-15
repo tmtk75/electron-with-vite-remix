@@ -1,11 +1,17 @@
 import { app, BrowserWindow, ipcMain } from "electron";
+import serve from "electron-serve";
 import { promises as fs } from "node:fs";
 import path, { dirname } from "node:path";
 import { fileURLToPath } from "url";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const createWindow = () => {
+const directory = path.join(__dirname, "../renderer"); // This file is in the above (a). To point the `out`, move up twice.
+const loadURL = serve({ directory });
+console.debug("loadURL: directory:", directory);
+
+const createWindow = async () => {
   const win = new BrowserWindow({
     // width: 800,
     // height: 600,
@@ -14,8 +20,10 @@ const createWindow = () => {
     },
   });
 
-  win.loadURL("http://localhost:5173");
-  // win.loadFile("index.html");
+  // win.loadURL("http://localhost:5173");
+  // .debug("loadURL: directory:", directory);
+
+  loadURL(win);
 
   let count = 0;
   setInterval(() => {
