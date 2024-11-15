@@ -10,8 +10,11 @@
 * [x] await import("electron")
 * [x] build:unpack
 * [x] IPC.
+  - [x] main -> renderer
+  - [x] renderer -> main
 * [ ] reload on change.
   - [x] renderer: by vite dev. already.
-  - [ ] preload: by reload.
+  - [x] preload: by reload.
   - [ ] main: by relauching.
-
+* [ ] auto detect listening port.
+* [ ] save window state (position and size)

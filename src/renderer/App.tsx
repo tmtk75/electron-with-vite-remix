@@ -12,10 +12,12 @@ declare global {
 
 const App = () => {
   useEffect(() => {
+    console.debug("register.on");
     const dispose = window.ipc.on("ping", function (...args) {
-      return `Hello from React, ${JSON.stringify(args)}`;
+      console.debug("ipc: main -> renderer", JSON.stringify(args));
     });
     return () => {
+      console.debug("dispose.on");
       dispose();
     };
   });

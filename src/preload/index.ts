@@ -9,7 +9,7 @@ const ipc = {
     const f = (event: IpcRendererEvent, ...args: any[]) =>
       func(...[event, ...args]);
     console.debug("register listener", channel, f);
-    ipcRenderer.on(channel, (e, a) => console.log("hasdfklasjdfkla", f(e, a)));
+    ipcRenderer.on(channel, f);
     return () => {
       console.debug("remove listener", channel, f);
       ipcRenderer.removeListener(channel, f);

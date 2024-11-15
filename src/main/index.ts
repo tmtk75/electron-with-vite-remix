@@ -40,6 +40,6 @@ app.on("window-all-closed", () => {
 
 // IPC sample
 ipcMain.handle("ipcTest", async (event, ...args) => {
-  console.debug({ event, ...args });
-  return "Result from main process";
+  console.debug("ipc: renderer -> main", { event, ...args });
+  return;
 });

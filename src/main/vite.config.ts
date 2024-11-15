@@ -24,7 +24,10 @@ export default defineConfig({
         }
         defaultHandler(warning);
       },
-      external: ["electron"],
+      external: [
+        "electron",
+        "node:fs", // without this, fs becomes null when imported. `import fs from "node:path"`
+      ],
       output: {
         dir: "out",
         entryFileNames: "main/[name].mjs",
