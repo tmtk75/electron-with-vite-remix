@@ -17,7 +17,7 @@
   - [x] preload: by reload (if code changes).
   - [x] main: by relauching (if code changes).
 * [x] use local URL as renderer for development. (RENDERER_URL=http://localhost:3000)
-* [ ] auto detect listening port.
+* [x] auto detect listening port.
 * [ ] save window state (position and size)
 * [ ] rebuild main and preload on change.
 * [x] environment variables are available in main with global.process.env.

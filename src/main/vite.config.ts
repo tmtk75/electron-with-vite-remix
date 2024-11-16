@@ -14,6 +14,7 @@ export default defineConfig({
         defaultHandler(warning);
       },
       external: [
+        "vite",
         "electron",
         "node:fs", // without this, fs becomes null when imported. `import fs from "node:path"`
         "electron-serve",
