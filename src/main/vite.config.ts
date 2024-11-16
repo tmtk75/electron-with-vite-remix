@@ -21,6 +21,7 @@ export default defineConfig({
       output: {
         dir: "out",
         entryFileNames: "main/[name].mjs",
+        format: "esm",
       },
     },
     minify: false,

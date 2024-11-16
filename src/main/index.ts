@@ -6,10 +6,12 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
 const directory = path.join(__dirname, "../renderer"); // This file is in the above (a). To point the `out`, move up twice.
 const loadURL = serve({ directory });
 console.debug("loadURL: directory:", directory);
+
+// console.info(JSON.stringify(import.meta.env, null, "  "));
+// console.debug("", JSON.stringify(global.process.env, null, "  "));
 
 const createWindow = async () => {
   const win = new BrowserWindow({

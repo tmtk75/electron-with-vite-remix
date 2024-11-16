@@ -19,4 +19,5 @@
 * [ ] auto detect listening port.
 * [ ] save window state (position and size)
 * [ ] rebuild main and preload on change.
+* [x] environment variables are available in main with global.process.env.
 
