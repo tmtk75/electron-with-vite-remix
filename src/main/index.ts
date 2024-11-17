@@ -20,8 +20,10 @@ const createWindow = async () => {
   const port = useDevServer
     ? await (async () => {
         viteServer = await createServer({
-          configFile: false,
+          configFile: "./src/renderer/vite.config.ts",
           root: "./src/renderer",
+          server: {
+          },
         });
         const listen = await viteServer.listen();
         viteServer.printUrls();
