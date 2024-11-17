@@ -23,4 +23,6 @@
 * [x] environment variables are available in main with global.process.env.
 * [ ] support .env, .env.local, .env.development, ...
 * [ ] remix?
+  - [x] dev-server works.
+  - [ ] vte:build: NOT WORKING YET.
 

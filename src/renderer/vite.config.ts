@@ -6,6 +6,7 @@ export default defineConfig({
     remix({
       // SPA mode
       ssr: false,
+      buildDirectory: "out/renderer",
     }),
   ],
   build: {
