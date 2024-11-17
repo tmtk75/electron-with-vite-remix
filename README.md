@@ -22,4 +22,5 @@
 * [ ] rebuild main and preload on change.
 * [x] environment variables are available in main with global.process.env.
 * [ ] support .env, .env.local, .env.development, ...
+* [ ] remix?
 
