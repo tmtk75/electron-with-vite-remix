@@ -1,5 +1,5 @@
 {
-  "name": "electron-with-remix",
+  "name": "electron-with-vite-remix",
   "private": true,
   "version": "0.0.0",
   "type": "module",
