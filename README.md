@@ -22,7 +22,22 @@
 * [ ] rebuild main and preload on change.
 * [x] environment variables are available in main with global.process.env.
 * [ ] support .env, .env.local, .env.development, ...
-* [ ] remix?
+* [x] remix
   - [x] dev-server works.
-  - [ ] vte:build: NOT WORKING YET.
+  - [x] vte:build works.
+  - [x] build:unpack works.
+  - [x] SPA
+  - [ ] SSR?
 
+
+## Development
+```
+# Launch vite-dev-server for renderer internally.
+[0]$ pnpm dev
+```
+```
+# Launch vite-dev-server for renderer independently.
+[0]$ pnpm dev:renderer
+[1]$ port=5173         # the port shown in the console above.
+[1]$ pnpm build:main && pnpm build:preload && RENDERER_URL=http://localhost:${port} pnpm exec electron .
+```

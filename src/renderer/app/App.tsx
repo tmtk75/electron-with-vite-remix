@@ -33,7 +33,7 @@ const App = () => {
       <div>
         <button
           onClick={async () => {
-            const v = await window.ipc.invoke({ a: 1, b: 2 });
+            const v = await window.ipc?.invoke({ a: 1, b: 2 });
             console.log({ v });
           }}
         >

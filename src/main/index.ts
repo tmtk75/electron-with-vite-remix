@@ -53,7 +53,7 @@ const createWindow = async () => {
   let count = 0;
   setInterval(() => {
     console.debug("send ping", count);
-    win.webContents.send("ping", `whoooooooh! ${count++}`);
+    win.webContents.send("ping", `hello from main! ${count++}`);
   }, 5000);
 };
 
