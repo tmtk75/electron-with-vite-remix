@@ -1,13 +1,12 @@
 {
-  "name": "electron-with-vite",
+  "name": "electron-with-remix",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "main": "out/main/index.mjs",
   "scripts": {
-    "dev": "pnpm build:preload && DEV_SERVER=1 pnpm dev:electron",
+    "dev": "pnpm build:main && pnpm build:preload && DEV_SERVER=1 electron .",
     "dev:renderer": "remix vite:dev ./src/renderer/",
-    "dev:electron": "pnpm build:main && electron .",
     "build:main": "vite build --config ./src/main/vite.config.ts",
     "build:preload": "vite build --config ./src/preload/vite.config.ts",
     "build:renderer": "remix vite:build ./src/renderer",
@@ -32,7 +31,7 @@
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
     "typescript": "^5.6.3",
-    "vite": "^5.4.10",
+    "vite": "^5.4.11",
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b",
