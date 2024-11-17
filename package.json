@@ -10,7 +10,7 @@
     "dev:electron": "pnpm build:main && electron .",
     "build:main": "vite build --config ./src/main/vite.config.ts",
     "build:preload": "vite build --config ./src/preload/vite.config.ts",
-    "build:renderer:wip": "remix vite:build ./src/renderer",
+    "build:renderer": "remix vite:build ./src/renderer",
     "build:unpack": "pnpm run build:main && pnpm run build:preload && pnpm run build:renderer && electron-builder --dir"
   },
   "dependencies": {
@@ -25,8 +25,12 @@
     "@remix-run/serve": "^2.14.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
     "electron": "^33.2.0",
     "electron-builder": "^25.1.8",
+    "isbot": "^5.1.17",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
     "typescript": "^5.6.3",
     "vite": "^5.4.10",
     "vite-plugin-node-polyfills": "^0.22.0"

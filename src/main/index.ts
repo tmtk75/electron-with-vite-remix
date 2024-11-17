@@ -7,7 +7,7 @@ import { createServer, ViteDevServer } from "vite";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const directory = path.join(__dirname, "../renderer"); // This file is in the above (a). To point the `out`, move up twice.
+const directory = path.join(__dirname, "../renderer/client"); // This file is in the above (a). To point the `out`, move up twice.
 const loadURL = serve({ directory });
 
 // console.info(JSON.stringify(import.meta.env, null, "  "));

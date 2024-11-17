@@ -1,1 +1,6 @@
-../../package.json
+{
+  "name": "renderer",
+  "private": true,
+  "type": "module",
+  "description": "minimal package.json so that remix vite:dev works in the project root."
+}

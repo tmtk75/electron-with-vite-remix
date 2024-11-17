@@ -1,9 +1,10 @@
+import { NavLink } from "@remix-run/react";
 import { useEffect } from "react";
 import "./App.css";
 
 declare global {
   interface Window {
-    ipc: {
+    ipc?: {
       on: (channel: string, func: (...args: any[]) => void) => () => void;
       invoke: (...args: any[]) => Promise<any>;
     };
@@ -12,6 +13,9 @@ declare global {
 
 const App = () => {
   useEffect(() => {
+    if (!window.ipc) {
+      return;
+    }
     console.debug("register.on");
     const dispose = window.ipc.on("ping", function (...args) {
       console.debug("ipc: main -> renderer", JSON.stringify(args));
@@ -33,8 +37,9 @@ const App = () => {
             console.log({ v });
           }}
         >
-          OK
-        </button>
+          Send event to main
+        </button>{" "}
+        |<NavLink to="/welcome">Welcome</NavLink>
       </div>
     </div>
   );
