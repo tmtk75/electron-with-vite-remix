@@ -4,6 +4,7 @@ import { promises as fs } from "node:fs";
 import path, { dirname } from "node:path";
 import { fileURLToPath } from "url";
 import { createServer, ViteDevServer } from "vite";
+import ElectronStore from "electron-store";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,24 +17,34 @@ const loadURL = serve({ directory });
 const useDevServer = global.process.env.DEV_SERVER;
 let viteServer: ViteDevServer;
 
+const store = new ElectronStore<any>({
+  encryptionKey: "something",
+});
+
 const createWindow = async () => {
   const port = useDevServer
     ? await (async () => {
+        console.time("vite-dev-server");
         viteServer = await createServer({
           configFile: "./src/renderer/vite.config.ts",
           root: "./src/renderer",
-          server: {
-          },
         });
         const listen = await viteServer.listen();
         viteServer.printUrls();
+        console.timeEnd("vite-dev-server");
         return listen.config.server.port;
       })()
     : global.process.env.PORT ?? 5173;
 
+  const bounds = store.get("bounds");
+  console.debug("restored bounds:", bounds);
+
   const win = new BrowserWindow({
-    // width: 800,
-    // height: 600,
+    ...{
+      width: 800,
+      height: 600,
+      ...bounds,
+    },
     webPreferences: {
       preload: path.join(__dirname, "../preload/index.cjs"),
     },
@@ -55,8 +66,16 @@ const createWindow = async () => {
     console.debug("send ping", count);
     win.webContents.send("ping", `hello from main! ${count++}`);
   }, 5000);
+
+  const boundsListener = () => {
+    const bounds = win.getBounds();
+    store.set("bounds", bounds);
+  };
+  win.on("moved", boundsListener);
+  win.on("resized", boundsListener);
 };
 
+console.time("start whenReady");
 app.whenReady().then(() => {
   createWindow();
 
@@ -65,6 +84,8 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+
+  console.timeEnd("start whenReady");
 });
 
 app.on("window-all-closed", () => {

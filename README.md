@@ -18,7 +18,7 @@
   - [x] main: by relauching (if code changes).
 * [x] use local URL as renderer for development. (RENDERER_URL=http://localhost:3000)
 * [x] auto detect listening port.
-* [ ] save window state (position and size)
+* [x] save/restore window position and size.
 * [ ] rebuild main and preload on change.
 * [x] environment variables are available in main with global.process.env.
 * [ ] support .env, .env.local, .env.development, ...

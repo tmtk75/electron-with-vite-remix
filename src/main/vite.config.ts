@@ -18,6 +18,7 @@ export default defineConfig({
         "electron",
         "node:fs", // without this, fs becomes null when imported. `import fs from "node:path"`
         "electron-serve",
+        "electron-store",
       ],
       output: {
         dir: "out",

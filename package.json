@@ -27,6 +27,7 @@
     "autoprefixer": "^10.4.20",
     "electron": "^33.2.0",
     "electron-builder": "^25.1.8",
+    "electron-store": "^10.0.0",
     "isbot": "^5.1.17",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
