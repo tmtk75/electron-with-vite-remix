@@ -25,5 +25,8 @@ export default defineConfig({
   build: {
     minify: false,
     emptyOutDir: false,
+    rollupOptions: {
+      // external: ["electron"],
+    },
   },
 });
