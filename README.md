@@ -21,6 +21,7 @@
 * [x] save/restore window position and size.
 * [ ] rebuild main and preload on change.
 * [x] environment variables are available in main with global.process.env.
+* [ ] configure electron paths like appData.
 * [ ] support .env, .env.local, .env.development, ...
 * [x] remix
   - [x] dev-server works.

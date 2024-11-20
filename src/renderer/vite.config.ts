@@ -10,7 +10,7 @@ declare module "@remix-run/node" {
 export default defineConfig({
   plugins: [
     remix({
-      ssr: false,
+      ssr: true,
       buildDirectory: "../../out/renderer",
       future: {
         v3_fetcherPersist: true,
