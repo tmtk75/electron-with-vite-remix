@@ -1,19 +1,21 @@
 import { useLoaderData } from "@remix-run/react";
 import App from "../App";
-import { electron } from "../electron.server";
-// import electron from "electron";
+
+const { app } = global.electron;
 
 export const loader = async (r) => {
-  console.debug("app:", global.app.getVersion());
-  console.debug("app:", global.app.getPath("userData"));
+  const version = app.getVersion();
+  const userData = app.getPath("userData");
+  console.debug("version:", version, "userData:", userData);
   return {
-    version: app.getVersion(),
+    userData,
+    version,
   };
 };
 
 export default function Index() {
   const v = useLoaderData();
-  // console.log({ app: global.app });
+  console.debug("loaderData:", v);
   return (
     <>
       {JSON.stringify(v)}
