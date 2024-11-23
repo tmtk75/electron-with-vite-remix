@@ -29,7 +29,10 @@
   - [x] build:unpack works.
   - [x] SPA
   - [ ] SSR?
-
+    * [x] vite-dev-server works.
+    * [x] assets served by express.
+    * [ ] assets served by electron.
+    
 
 ## Development
 ```
