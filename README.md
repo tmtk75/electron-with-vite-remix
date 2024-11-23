@@ -30,8 +30,8 @@
   - [x] SPA
   - [ ] SSR?
     * [x] vite-dev-server works.
-    * [x] assets served by express.
-    * [ ] assets served by electron.
+    * ~~[x] assets served by express.~~ worked but deleted.
+    * [x] assets served by electron.
     
 
 ## Development

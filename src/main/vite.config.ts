@@ -10,15 +10,14 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      onwarn: (warning, defaultHandler) => {
-        defaultHandler(warning);
-      },
       external: [
         "vite",
         "electron",
         "node:fs", // without this, fs becomes null when imported. `import fs from "node:path"`
         "electron-serve",
         "electron-store",
+        "@remix-run/node",
+        // "mime", // NOTE: don't enable. not working if it's external.
       ],
       output: {
         dir: "out",
@@ -28,8 +27,5 @@ export default defineConfig({
     },
     minify: false,
     emptyOutDir: false,
-  },
-  esbuild: {
-    platform: "node",
   },
 });

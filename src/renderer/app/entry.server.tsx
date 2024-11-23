@@ -96,6 +96,7 @@ function handleBrowserRequest(
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
+    // console.log(request, responseStatusCode, responseHeaders, remixContext);
     const { pipe, abort } = renderToPipeableStream(
       <RemixServer
         context={remixContext}

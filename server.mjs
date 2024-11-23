@@ -1,7 +1,7 @@
 //
 // https://quramy.medium.com/remix-with-express-と-dev-server-301afc468f9b
 //
-import { dirname, resolve } from "node:path";
+import { dirname, resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
 import remix from "@remix-run/express";
@@ -10,30 +10,26 @@ import remix from "@remix-run/express";
 import electron from "electron";
 global.electron = electron;
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+// const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = "./dist/mac-arm64/electron-with-vite-remix.app/Contents/Resources/app";
+const publicAssets = resolve(__dirname, "./out/renderer/client");
+// const serverIndex = resolve("./out/renderer/server/index.js"); // works
+const serverIndex = resolve(__dirname, "./out/renderer/server/index.js"); // fails.
 
-const mode = process.env.NODE_ENV;
-if (mode === "production") {
-  const port = 3000;
-  const handleClientAssets = express.static(
-    resolve(__dirname, "./out/renderer/client")
-  );
-  const app = express();
-  app.all(
-    "*",
-    handleClientAssets,
-    remix.createRequestHandler({
-      build: await import("./out/renderer/server/index.js"),
-    })
-  );
-  app.listen(port, () => {
-    console.log(`Listening on http://localhost:${port}`);
-  });
-} else {
-  const vite = await import("vite");
-  const viteServer = await vite.createServer({
-    root: "./src/renderer",
-  });
-  const listen = await viteServer.listen();
-  viteServer.printUrls();
-}
+console.debug("pwd:", process.cwd());
+console.debug({ __dirname });
+console.debug({ publicAssets, serverIndex });
+
+const port = 3000;
+const handleClientAssets = express.static(publicAssets);
+const app = express();
+app.all(
+  "*",
+  handleClientAssets,
+  remix.createRequestHandler({
+    build: await import(serverIndex),
+  })
+);
+app.listen(port, () => {
+  console.log(`Listening on http://localhost:${port}`);
+});

@@ -16,3 +16,6 @@ out
 # vim
 .*.swp
 
+# memo
+*.local.md
+

@@ -1,41 +1,22 @@
-import { app, BrowserWindow, ipcMain } from "electron";
-import serve from "electron-serve";
-import { promises as fs } from "node:fs";
-import path, { dirname } from "node:path";
-import { fileURLToPath } from "url";
-import { createServer, ViteDevServer } from "vite";
+import {
+  createReadableStreamFromReadable,
+  createRequestHandler,
+} from "@remix-run/node";
+import { app, BrowserWindow, ipcMain, protocol } from "electron";
 import ElectronStore from "electron-store";
+import mime from "mime";
+import { promises as fs, createReadStream } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "url";
+import { ViteDevServer } from "vite";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const directory = path.join(__dirname, "../renderer/client"); // This file is in the above (a). To point the `out`, move up twice.
-const loadURL = serve({ directory });
-
-// console.info(JSON.stringify(import.meta.env, null, "  "));
-// console.debug("", JSON.stringify(global.process.env, null, "  "));
-
-const useDevServer = global.process.env.DEV_SERVER;
 let viteServer: ViteDevServer;
 
-const store = new ElectronStore<any>({
-  encryptionKey: "something",
-});
+const store = new ElectronStore<any>({ encryptionKey: "something" });
 
-const createWindow = async () => {
-  const port = useDevServer
-    ? await (async () => {
-        console.time("vite-dev-server");
-        viteServer = await createServer({
-          configFile: "./src/renderer/vite.config.ts",
-          root: "./src/renderer",
-        });
-        const listen = await viteServer.listen();
-        viteServer.printUrls();
-        console.timeEnd("vite-dev-server");
-        return listen.config.server.port;
-      })()
-    : global.process.env.PORT ?? 5173;
-
+const createWindow = async (rendererURL: string) => {
   const bounds = store.get("bounds");
   console.debug("restored bounds:", bounds);
 
@@ -46,26 +27,12 @@ const createWindow = async () => {
       ...bounds,
     },
     webPreferences: {
-      preload: path.join(__dirname, "../preload/index.cjs"),
+      preload: join(__dirname, "../preload/index.cjs"),
     },
   });
 
-  const rendererURL =
-    global.process.env.RENDERER_URL ?? `http://localhost:${port}`;
-
-  if (!app.isPackaged && rendererURL) {
-    console.debug("loadURL: rendererURL:", rendererURL);
-    win.loadURL(rendererURL);
-  } else {
-    console.debug("loadURL: directory:", directory);
-    loadURL(win);
-  }
-
-  let count = 0;
-  setInterval(() => {
-    console.debug("send ping", count);
-    win.webContents.send("ping", `hello from main! ${count++}`);
-  }, 5000);
+  console.debug("loadURL: rendererURL:", rendererURL);
+  win.loadURL(rendererURL);
 
   const boundsListener = () => {
     const bounds = win.getBounds();
@@ -76,17 +43,55 @@ const createWindow = async () => {
 };
 
 console.time("start whenReady");
-app.whenReady().then(() => {
-  createWindow();
+const rendererClientPath = join(__dirname, "../renderer/client");
+
+(async () => {
+  await app.whenReady();
+  const serverBuild = await import(
+    join(__dirname, "../renderer/server/index.js")
+  );
+
+  protocol.handle("http", async (req) => {
+    const url = new URL(req.url);
+    if (
+      !["localhost", "127.0.0.1"].includes(url.hostname) ||
+      (url.port && url.port !== "80")
+    ) {
+      return await fetch(req);
+    }
+
+    req.headers.append("Referer", req.referrer);
+    try {
+      const res = await serveAsset(req, rendererClientPath);
+      if (res) {
+        return res;
+      }
+
+      const handler = createRequestHandler(serverBuild, "production");
+      return await handler(req, {
+        /* context */
+      });
+    } catch (err) {
+      console.warn(err);
+      const { stack, message } = toError(err);
+      return new Response(`${stack ?? message}`, {
+        status: 500,
+        headers: { "content-type": "text/html" },
+      });
+    }
+  });
+
+  const rendererURL = "http://localhost";
+  createWindow(rendererURL);
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
+      createWindow(rendererURL);
     }
   });
 
   console.timeEnd("start whenReady");
-});
+})();
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
@@ -121,13 +126,44 @@ app.on("before-quit", async (event) => {
   }
 });
 
+// serve assets built by vite.
+export async function serveAsset(
+  req: Request,
+  assetsPath: string
+): Promise<Response | undefined> {
+  const url = new URL(req.url);
+  const fullPath = join(assetsPath, decodeURIComponent(url.pathname));
+  if (!fullPath.startsWith(assetsPath)) {
+    return;
+  }
+
+  const stat = await fs.stat(fullPath).catch(() => undefined);
+  if (!stat?.isFile()) {
+    // Nothing to do for directories.
+    return;
+  }
+
+  const headers = new Headers();
+  const mimeType = mime.getType(fullPath);
+  if (mimeType) {
+    headers.set("Content-Type", mimeType);
+  }
+
+  const body = createReadableStreamFromReadable(createReadStream(fullPath));
+  return new Response(body, { headers });
+}
+
+function toError(value: unknown) {
+  return value instanceof Error ? value : new Error(String(value));
+}
+
 // Reload on change.
 let isQuited = false;
 
 const abort = new AbortController();
 const { signal } = abort;
 (async () => {
-  const dir = path.join(__dirname, "../../out");
+  const dir = join(__dirname, "../../out");
   try {
     const watcher = fs.watch(dir, { signal, recursive: true });
     for await (const event of watcher) {
