@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "pnpm build:main && pnpm build:preload && DEV_SERVER=1 electron .",
     "dev:renderer": "pnpm exec electron dev-server.mjs",
-    "remix:ssr": "pnpm build:main && pnpm build:preload && pnpm build:renderer && NODE_ENV=production pnpm exec electron dev-server.mjs",
+    "dev:main": "pnpm build:main && pnpm build:preload && electron out/main/index.mjs",
     "build:main": "vite build --config ./src/main/vite.config.ts",
     "build:preload": "vite build --config ./src/preload/vite.config.ts",
     "build:renderer": "remix vite:build ./src/renderer",

@@ -3,16 +3,32 @@ import {
   createRequestHandler,
 } from "@remix-run/node";
 import { app, BrowserWindow, ipcMain, protocol } from "electron";
+import electron from "electron";
 import ElectronStore from "electron-store";
 import mime from "mime";
 import { promises as fs, createReadStream } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "url";
-import { ViteDevServer } from "vite";
+import { createServer, ViteDevServer } from "vite";
+
+console.debug("appPath:", app.getAppPath());
+const keys: Parameters<typeof app.getPath>[number][] = [
+  "home",
+  "appData",
+  "userData",
+  "sessionData",
+  "logs",
+  "temp",
+];
+keys.forEach((key) => console.debug(`${key}:`, app.getPath(key)));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-let viteServer: ViteDevServer;
+
+const isDev = !(process.env.NODE_ENV === "production" || app.isPackaged);
+console.debug("main: isDev:", isDev);
+console.debug("NODE_ENV:", process.env.NODE_ENV);
+console.debug("isPackaged:", app.isPackaged);
 
 const store = new ElectronStore<any>({ encryptionKey: "something" });
 
@@ -44,13 +60,13 @@ const createWindow = async (rendererURL: string) => {
 
 console.time("start whenReady");
 const rendererClientPath = join(__dirname, "../renderer/client");
+let viteServer: ViteDevServer;
 
 (async () => {
   await app.whenReady();
-  const serverBuild = await import(
-    join(__dirname, "../renderer/server/index.js")
-  );
-
+  const serverBuild = isDev
+    ? null // serverBuild is not used in dev.
+    : await import(join(__dirname, "../renderer/server/index.js"));
   protocol.handle("http", async (req) => {
     const url = new URL(req.url);
     if (
@@ -81,7 +97,18 @@ const rendererClientPath = join(__dirname, "../renderer/client");
     }
   });
 
-  const rendererURL = "http://localhost";
+  const rendererURL = await (isDev
+    ? (async () => {
+        viteServer = await createServer({
+          root: "./src/renderer", // configFile: "./src/renderer/vite.config.ts",
+        });
+        const listen = await viteServer.listen();
+        global.__electron__ = electron;
+        viteServer.printUrls();
+        return "http://localhost:5173";
+      })()
+    : "http://localhost");
+
   createWindow(rendererURL);
 
   app.on("activate", () => {

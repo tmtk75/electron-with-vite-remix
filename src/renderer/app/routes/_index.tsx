@@ -1,17 +1,18 @@
 import { useLoaderData } from "@remix-run/react";
 import App from "../App";
 
+const isDev = import.meta.env.DEV;
+console.debug("renderer: isDev:", isDev);
+
 async function importElectron() {
-  if (process.env.NODE_ENV !== "production") {
+  if (isDev) {
     return global.__electron__;
   }
-  return import("electron");
+  return import("electron"); // doesn't work on remix:dev (vite-dev-server)
 }
 
-const { app } = await importElectron();
-
 export const loader = async () => {
-  // const { app } = await import("electron"); // doesn't work on remix:dev (vite-dev-server)
+  const { app } = await importElectron();
 
   const version = app.getVersion();
   const userData = app.getPath("userData");
@@ -24,12 +25,6 @@ export const loader = async () => {
 
 export default function Index() {
   const v = useLoaderData();
-  import("electron").then(({ app }) => {
-    // NOTE: this runs in the main process but an error is shown in the renderer process
-    //       > Uncaught (in promise) ReferenceError: __dirname is not defined
-
-    console.debug("version", app.getVersion()); // app is undefined if vite-dev-server
-  });
   console.debug("loaderData:", v);
   return (
     <>
