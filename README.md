@@ -32,6 +32,10 @@
     * [x] vite-dev-server works.
     * ~~[x] assets served by express.~~ worked but deleted.
     * [x] assets served by electron.
+* [x] dev/build variation
+  - [x] dev:renderer -- to develop UI mainly with vite-dev-server.
+  - [x] dev:mainw -- to develop main process mainly with vite-dev-server.
+  - [x] build:unpack -- to build unpacked app.
     
 
 ## Development

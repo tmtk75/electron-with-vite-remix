@@ -5,7 +5,6 @@
   "type": "module",
   "main": "out/main/index.mjs",
   "scripts": {
-    "dev": "pnpm build:main && pnpm build:preload && DEV_SERVER=1 electron .",
     "dev:renderer": "pnpm exec electron dev-server.mjs",
     "dev:main": "pnpm build:main && pnpm build:preload && electron out/main/index.mjs",
     "build:main": "vite build --config ./src/main/vite.config.ts",
