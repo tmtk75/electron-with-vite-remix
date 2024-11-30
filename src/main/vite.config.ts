@@ -13,6 +13,12 @@ export default defineConfig({
       external: [
         "vite",
         "electron",
+        ...[
+          "electron-log",
+          // electron-log uses fs internally
+          "fs",
+          "util",
+        ],
         "node:fs", // without this, fs becomes null when imported. `import fs from "node:path"`
         "electron-store",
         "@remix-run/node",

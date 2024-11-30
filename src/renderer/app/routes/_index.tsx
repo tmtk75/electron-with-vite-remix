@@ -2,6 +2,7 @@
 
 import { useLoaderData } from "@remix-run/react";
 import App from "../App";
+// import log from "electron-log/renderer"; // TOOD: check how to effectively use electron-log in renderer
 
 const isDev = import.meta.env.DEV;
 console.debug("renderer: isDev:", isDev);

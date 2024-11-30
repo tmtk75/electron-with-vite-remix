@@ -10,6 +10,9 @@ import { promises as fs, createReadStream } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "url";
 import { createServer, ViteDevServer } from "vite";
+import log from "electron-log"; // write logs into ${app.getPath("logs")}/main.log without `/main`.
+// log.initialize(); // inject a built-in preload script. https://github.com/megahertz/electron-log/blob/master/docs/initialize.md
+Object.assign(console, log.functions);
 
 console.debug("appPath:", app.getAppPath());
 const keys: Parameters<typeof app.getPath>[number][] = [
