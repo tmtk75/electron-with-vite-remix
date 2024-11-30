@@ -14,6 +14,8 @@ import log from "electron-log"; // write logs into ${app.getPath("logs")}/main.l
 // log.initialize(); // inject a built-in preload script. https://github.com/megahertz/electron-log/blob/master/docs/initialize.md
 Object.assign(console, log.functions);
 
+console.debug("main: import.meta.env:", import.meta.env);
+
 console.debug("appPath:", app.getAppPath());
 const keys: Parameters<typeof app.getPath>[number][] = [
   "home",
@@ -28,9 +30,9 @@ keys.forEach((key) => console.debug(`${key}:`, app.getPath(key)));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const isDev = !(process.env.NODE_ENV === "production" || app.isPackaged);
+const isDev = !(global.process.env.NODE_ENV === "production" || app.isPackaged);
 console.debug("main: isDev:", isDev);
-console.debug("NODE_ENV:", process.env.NODE_ENV);
+console.debug("NODE_ENV:", global.process.env.NODE_ENV);
 console.debug("isPackaged:", app.isPackaged);
 
 const store = new ElectronStore<any>({ encryptionKey: "something" });
@@ -107,7 +109,8 @@ declare global {
   const rendererURL = await (isDev
     ? (async () => {
         viteServer = await createServer({
-          root: "./src/renderer", // configFile: "./src/renderer/vite.config.ts",
+          root: "./src/renderer",
+          envDir: join(__dirname, "../.."), // load .env files from the root directory.
         });
         await viteServer.listen();
         global.__electron__ = electron;

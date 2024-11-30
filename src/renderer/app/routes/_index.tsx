@@ -6,6 +6,7 @@ import App from "../App";
 
 const isDev = import.meta.env.DEV;
 console.debug("renderer: isDev:", isDev);
+console.debug("renderer: import.meta.env:", import.meta.env);
 
 declare global {
   var __electron__: typeof Electron.CrossProcessExports;
@@ -13,6 +14,7 @@ declare global {
 
 async function importElectron() {
   if (isDev) {
+    // electron is exposed as a global variable in dev mode.
     return global.__electron__;
   }
   return import("electron"); // doesn't work on remix:dev (vite-dev-server)

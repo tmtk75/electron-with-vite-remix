@@ -1,10 +1,17 @@
-// simple vite-dev-server to develop renderer process.
 // @ts-check
+//
+// simple vite-dev-server to develop renderer process.
+//
 import electron, { app } from "electron";
-import { createServer } from "vite";
+import { createServer, loadEnv } from "vite";
 
-// expose electron
+// expose electron.
 global.__electron__ = electron;
+
+// load environment variables.
+const env = loadEnv("development", process.cwd());
+process.env = { ...process.env, ...env };
+
 const viteServer = await createServer({ root: "./src/renderer" });
 await viteServer.listen();
 viteServer.printUrls();

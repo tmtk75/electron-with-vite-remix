@@ -22,7 +22,10 @@
 * [ ] rebuild main and preload on change.
 * [x] environment variables are available in main with global.process.env.
 * [ ] configure electron paths like appData.
-* [ ] support .env, .env.local, .env.development, ...
+* [x] support .env, .env.local, .env.development, ...
+  - [x] dev:renderer
+  - [x] dev:main
+  - [x] build:unpack
 * [x] remix
   - [x] dev-server works.
   - [x] vte:build works.

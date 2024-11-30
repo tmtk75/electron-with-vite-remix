@@ -1,6 +1,6 @@
 import { ipcRenderer, contextBridge, type IpcRendererEvent } from "electron";
 
-console.log("start preload.", ipcRenderer);
+console.debug("start preload.", ipcRenderer);
 
 const ipc = {
   invoke(...args: any[]) {
