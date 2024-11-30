@@ -2,7 +2,7 @@ import {
   createReadableStreamFromReadable,
   createRequestHandler,
 } from "@remix-run/node";
-import { app, BrowserWindow, ipcMain, protocol } from "electron";
+import { app, BrowserWindow, ipcMain, Menu, protocol } from "electron";
 import electron from "electron";
 import ElectronStore from "electron-store";
 import mime from "mime";
@@ -131,17 +131,51 @@ declare global {
 
   console.timeEnd("start whenReady");
   return win;
-})().then((win) => {
-  // IPC samples : send and recieve.
-  let count = 0;
-  setInterval(
-    () => win.webContents.send("ping", `hello from main! ${count++}`),
-    60 * 1000
+})()
+  .then((win) => {
+    // IPC samples : send and recieve.
+    let count = 0;
+    setInterval(
+      () => win.webContents.send("ping", `hello from main! ${count++}`),
+      60 * 1000
+    );
+    ipcMain.handle("ipcTest", (event, ...args) =>
+      console.debug("ipc: renderer -> main", { event, ...args })
+    );
+    return win;
+  })
+  .then((win) => setupMenu(win));
+
+//
+// Menu: append Go -> Back, Forward
+//
+const setupMenu = (win: BrowserWindow): void => {
+  const app = Menu.getApplicationMenu();
+  Menu.setApplicationMenu(
+    Menu.buildFromTemplate([
+      ...(app ? app.items : []),
+      {
+        label: "Go",
+        submenu: [
+          {
+            label: "Back",
+            accelerator: "CmdOrCtrl+[",
+            click: () => {
+              win?.webContents.navigationHistory.goBack();
+            },
+          },
+          {
+            label: "Forward",
+            accelerator: "CmdOrCtrl+]",
+            click: () => {
+              win?.webContents.navigationHistory.goForward();
+            },
+          },
+        ],
+      },
+    ])
   );
-  ipcMain.handle("ipcTest", (event, ...args) =>
-    console.debug("ipc: renderer -> main", { event, ...args })
-  );
-});
+};
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {

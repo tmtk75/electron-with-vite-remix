@@ -40,6 +40,7 @@
   - [x] dev:mainw -- to develop main process mainly with vite-dev-server.
   - [x] build:unpack -- to build unpacked app.
 * [x] logging with electron-log.
+* [x] navigation history by pressing back/forward accelerators.
     
 
 ## Development
