@@ -39,6 +39,7 @@
   - [x] dev:renderer -- to develop UI mainly with vite-dev-server.
   - [x] dev:mainw -- to develop main process mainly with vite-dev-server.
   - [x] build:unpack -- to build unpacked app.
+* [x] logging with electron-log.
     
 
 ## Development
