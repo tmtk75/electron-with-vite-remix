@@ -6,6 +6,10 @@ import App from "../App";
 const isDev = import.meta.env.DEV;
 console.debug("renderer: isDev:", isDev);
 
+declare global {
+  var __electron__: typeof Electron.CrossProcessExports;
+}
+
 async function importElectron() {
   if (isDev) {
     return global.__electron__;
