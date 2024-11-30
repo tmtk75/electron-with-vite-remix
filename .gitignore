@@ -19,3 +19,6 @@ out
 # memo
 *.local.md
 
+# env
+.env
+.env.*
