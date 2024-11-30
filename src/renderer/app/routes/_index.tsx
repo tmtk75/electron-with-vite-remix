@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import { useLoaderData } from "@remix-run/react";
 import App from "../App";
 

@@ -1,4 +1,5 @@
 // simple vite-dev-server to develop renderer process.
+// @ts-check
 import electron, { app } from "electron";
 import { createServer } from "vite";
 

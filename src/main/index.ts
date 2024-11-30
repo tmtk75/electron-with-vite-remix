@@ -62,6 +62,10 @@ console.time("start whenReady");
 const rendererClientPath = join(__dirname, "../renderer/client");
 let viteServer: ViteDevServer;
 
+declare global {
+  var __electron__: typeof electron;
+}
+
 (async () => {
   await app.whenReady();
   const serverBuild = isDev
@@ -102,7 +106,7 @@ let viteServer: ViteDevServer;
         viteServer = await createServer({
           root: "./src/renderer", // configFile: "./src/renderer/vite.config.ts",
         });
-        const listen = await viteServer.listen();
+        await viteServer.listen();
         global.__electron__ = electron;
         viteServer.printUrls();
         return "http://localhost:5173";
@@ -135,7 +139,7 @@ ipcMain.handle("ipcTest", async (event, ...args) => {
 //
 // take care of vite-dev-server.
 //
-app.on("before-quit", async (event) => {
+app.on("before-quit", async (_event) => {
   if (!viteServer) {
     return;
   }
@@ -193,7 +197,7 @@ const { signal } = abort;
   const dir = join(__dirname, "../../out");
   try {
     const watcher = fs.watch(dir, { signal, recursive: true });
-    for await (const event of watcher) {
+    for await (const _event of watcher) {
       if (!isQuited) {
         isQuited = true;
         app.relaunch();
