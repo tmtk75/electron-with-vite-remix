@@ -14,7 +14,6 @@ export default defineConfig({
         "vite",
         "electron",
         "node:fs", // without this, fs becomes null when imported. `import fs from "node:path"`
-        "electron-serve",
         "electron-store",
         "@remix-run/node",
         // "mime", // NOTE: don't enable. not working if it's external.
