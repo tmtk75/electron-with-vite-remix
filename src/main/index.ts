@@ -61,6 +61,8 @@ const createWindow = async (rendererURL: string) => {
   };
   win.on("moved", boundsListener);
   win.on("resized", boundsListener);
+
+  return win;
 };
 
 console.time("start whenReady");
@@ -119,7 +121,7 @@ declare global {
       })()
     : "http://localhost");
 
-  createWindow(rendererURL);
+  const win = createWindow(rendererURL);
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -128,18 +130,23 @@ declare global {
   });
 
   console.timeEnd("start whenReady");
-})();
+  return win;
+})().then((win) => {
+  // IPC samples : send and recieve.
+  let count = 0;
+  setInterval(
+    () => win.webContents.send("ping", `hello from main! ${count++}`),
+    60 * 1000
+  );
+  ipcMain.handle("ipcTest", (event, ...args) =>
+    console.debug("ipc: renderer -> main", { event, ...args })
+  );
+});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
-});
-
-// IPC sample
-ipcMain.handle("ipcTest", async (event, ...args) => {
-  console.debug("ipc: renderer -> main", { event, ...args });
-  return;
 });
 
 //
