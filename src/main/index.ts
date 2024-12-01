@@ -3,12 +3,13 @@ import {
   createReadableStreamFromReadable,
   createRequestHandler,
 } from "@remix-run/node";
+import * as pkg from "../../package.json";
 import { app, BrowserWindow, ipcMain, Menu, protocol } from "electron";
 import electron from "electron";
 import ElectronStore from "electron-store";
 import mime from "mime";
 import { promises as fs, createReadStream } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, isAbsolute } from "node:path";
 import { fileURLToPath } from "url";
 import { createServer, ViteDevServer } from "vite";
 import log from "electron-log"; // write logs into ${app.getPath("logs")}/main.log without `/main`.
@@ -16,6 +17,30 @@ import log from "electron-log"; // write logs into ${app.getPath("logs")}/main.l
 Object.assign(console, log.functions);
 
 console.debug("main: import.meta.env:", import.meta.env);
+
+(() => {
+  const root = global.process.env.APP_PATH_ROOT ?? import.meta.env.VITE_APP_PATH_ROOT;
+  if (root === undefined) {
+    console.info("no given APP_PATH_ROOT or VITE_APP_PATH_ROOT. default path is used.");
+    return;
+  }
+  if (!isAbsolute(root)) {
+    console.error("APP_PATH_ROOT must be absolute path.");
+    global.process.exit(1);
+  }
+
+  console.info(`APP_PATH_ROOT: ${root}`);
+  const subdirName = pkg.name;
+  for (const [key, val] of [
+    ["appData", ""],
+    ["userData", subdirName],
+    ["sessionData", subdirName],
+  ] as const) {
+    app.setPath(key, join(root, val));
+  }
+
+  app.setAppLogsPath(join(root, `${subdirName}/Logs`));
+})();
 
 console.debug("appPath:", app.getAppPath());
 const keys: Parameters<typeof app.getPath>[number][] = [

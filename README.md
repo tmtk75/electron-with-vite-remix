@@ -42,16 +42,5 @@
 * [x] logging with electron-log.
 * [x] navigation history by pressing back/forward accelerators.
 * [x] typecheck
-    
+* [x] environment variables, APP_PATH_ROOT and VITE_APP_PATH_ROOT.
 
-## Development
-```
-# Launch vite-dev-server for renderer internally.
-[0]$ pnpm dev
-```
-```
-# Launch vite-dev-server for renderer independently.
-[0]$ pnpm dev:renderer
-[1]$ port=5173         # the port shown in the console above.
-[1]$ pnpm build:main && pnpm build:preload && RENDERER_URL=http://localhost:${port} pnpm exec electron .
-```
