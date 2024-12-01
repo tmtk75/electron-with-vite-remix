@@ -1,10 +1,10 @@
 # README
 
 ## TODO
-* [x] Build tool investigation
+* [x] build tool investigation
    - https://zenn.dev/righttouch/articles/86457bf2908379
    - https://zenn.dev/ssssota/articles/e59cf5adaf97ce#rspack
-* [x] Quick start : https://www.electronjs.org/docs/latest/tutorial/quick-start
+* [x] quick start : https://www.electronjs.org/docs/latest/tutorial/quick-start
 * [x] vite-plugin-node-polyfills : fir for 'Module "node:path" has been externalized for browser compatibility'
 * [x] build into ./out
 * [x] await import("electron")
@@ -31,7 +31,7 @@
   - [x] vte:build works.
   - [x] build:unpack works.
   - [x] SPA
-  - [ ] SSR?
+  - [x] SSR
     * [x] vite-dev-server works.
     * ~~[x] assets served by express.~~ worked but deleted.
     * [x] assets served by electron.
@@ -41,6 +41,7 @@
   - [x] build:unpack -- to build unpacked app.
 * [x] logging with electron-log.
 * [x] navigation history by pressing back/forward accelerators.
+* [x] typecheck
     
 
 ## Development
