@@ -1,4 +1,68 @@
 # README
+A boilerplate for Electron + Vite + Remix.
+You can use Electron’s API within `loader` and `action`.
+
+
+## Getting Started
+You'll see a window by electron if you run the following commands.
+```
+$ pnpm install
+$ pnpm dev:main
+```
+
+
+## Development
+There are three script tasks for development.
+* `dev:renderer`
+* `dev:main`
+* `build:unpack`
+
+From top to bottom, these tasks are intended for developing the renderer process, developing the main process, and checking the app behavior after building, respectively.
+
+&nbsp; | `dev:renderer` | `dev:main` | `build:unpack`
+--- | --- | --- | ---
+purpose | develop renderer process | develop main process | check built app
+electron | available | available | available
+NODE_ENV | development | development | production
+interface | browser | electron window  | electron window
+
+### `dev:renderer`
+This task is intended for developing the renderer process.
+
+`dev:renderer` launches the vite-dev-server inside Electron. A URL will be displayed, which you can open in your browser. Its purpose is similar to `remix vite:dev`.
+```
+$ pnpm dev:renderer
+...
+  ➜  Local:   http://localhost:5173/
+```
+
+
+### `dev:main`
+This task is intended for developing the main process.
+
+`dev:main` builds the main and preload processes and launches them in Electron. The generated files are output to `./out`.
+
+Like `dev:renderer`, it also starts the vite-dev-server.
+
+* main process : `out/main/index.mjs`
+* renderer process : `out/preload/index.cjs`
+* renderer process : `http://localhost:5173/`
+
+Changes under `src/renderer/**` will trigger HMR and reload automatically.
+
+Changes under `src/{main,preload}/**` will not be reflected immediately. To apply changes, run `build:main` or `build:preload`. This will restart Electron, and the changes will take effect.
+
+
+### `build:unpack`
+This task is intended for checking the app behavior after building.
+
+build:unpack uses electron-builder to output the app in an unpacked format to ./dist. Launch the app for each specific OS.
+
+For example, on macOS, it generates an executable as follows:
+```
+dist/mac-${arch}/${app_name}.app/Contents/MacOS/${app_name}
+```
+
 
 ## TODO
 * [x] build tool investigation

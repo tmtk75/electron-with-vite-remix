@@ -13,6 +13,11 @@ export default defineConfig({
       external: ["electron"],
       output: {
         dir: "out",
+
+        // preload must be cjs format.
+        // if mjs, it will be error:
+        //   - Unable to load preload script.
+        //   - SyntaxError: Cannot use import statement outside a module.
         entryFileNames: "preload/[name].cjs",
         format: "cjs",
       },
