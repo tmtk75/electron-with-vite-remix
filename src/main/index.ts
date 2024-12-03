@@ -140,10 +140,10 @@ declare global {
           root: "./src/renderer",
           envDir: join(__dirname, "../.."), // load .env files from the root directory.
         });
-        await viteServer.listen();
+        const listen = await viteServer.listen();
         global.__electron__ = electron;
         viteServer.printUrls();
-        return "http://localhost:5173";
+        return `http://localhost:${listen.config.server.port}`;
       })()
     : "http://localhost");
 
