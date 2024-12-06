@@ -23,6 +23,7 @@ export default defineConfig({
         "electron-store",
         "@remix-run/node",
         // "mime", // NOTE: don't enable. not working if it's external.
+        "electron-updater",
       ],
       output: {
         dir: "out",

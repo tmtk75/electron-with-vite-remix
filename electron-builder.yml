@@ -2,7 +2,7 @@
 # https://www.electron.build/configuration/configuration
 #
 copyright: Copyright © 2024 ${author}
-asar: true
+asar: false
 
 appId: com.electron-with-vite-remix.app
 productName: electron-with-vite-remix

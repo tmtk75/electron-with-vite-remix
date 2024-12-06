@@ -18,6 +18,7 @@ import { dirname, isAbsolute, join } from "node:path";
 import { fileURLToPath } from "url";
 import { createServer, ViteDevServer } from "vite";
 import * as pkg from "../../package.json";
+import { setupAutoUpdater } from "./auto-update";
 // log.initialize(); // inject a built-in preload script. https://github.com/megahertz/electron-log/blob/master/docs/initialize.md
 Object.assign(console, log.functions);
 
@@ -295,3 +296,5 @@ const { signal } = abort;
     }
   }
 })();
+
+setupAutoUpdater();
