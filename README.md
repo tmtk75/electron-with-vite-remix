@@ -2,6 +2,8 @@
 A boilerplate for Electron + Vite + Remix.
 You can use Electron’s API within `loader` and `action`.
 
+No SSR version is available at a branch, [no-ssr](https://github.com/tmtk75/electron-with-vite-remix/tree/no-ssr).
+
 
 ## Getting Started
 You'll see a window by electron if you run the following commands.
