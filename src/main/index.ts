@@ -3,25 +3,33 @@ import {
   createReadableStreamFromReadable,
   createRequestHandler,
 } from "@remix-run/node";
-import * as pkg from "../../package.json";
-import { app, BrowserWindow, ipcMain, Menu, protocol } from "electron";
-import electron from "electron";
+import electron, {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Menu,
+  protocol,
+} from "electron";
+import log from "electron-log"; // write logs into ${app.getPath("logs")}/main.log without `/main`.
 import ElectronStore from "electron-store";
 import mime from "mime";
-import { promises as fs, createReadStream } from "node:fs";
-import { dirname, join, isAbsolute } from "node:path";
+import { createReadStream, promises as fs } from "node:fs";
+import { dirname, isAbsolute, join } from "node:path";
 import { fileURLToPath } from "url";
 import { createServer, ViteDevServer } from "vite";
-import log from "electron-log"; // write logs into ${app.getPath("logs")}/main.log without `/main`.
+import * as pkg from "../../package.json";
 // log.initialize(); // inject a built-in preload script. https://github.com/megahertz/electron-log/blob/master/docs/initialize.md
 Object.assign(console, log.functions);
 
 console.debug("main: import.meta.env:", import.meta.env);
 
 (() => {
-  const root = global.process.env.APP_PATH_ROOT ?? import.meta.env.VITE_APP_PATH_ROOT;
+  const root =
+    global.process.env.APP_PATH_ROOT ?? import.meta.env.VITE_APP_PATH_ROOT;
   if (root === undefined) {
-    console.info("no given APP_PATH_ROOT or VITE_APP_PATH_ROOT. default path is used.");
+    console.info(
+      "no given APP_PATH_ROOT or VITE_APP_PATH_ROOT. default path is used."
+    );
     return;
   }
   if (!isAbsolute(root)) {
