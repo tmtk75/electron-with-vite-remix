@@ -1,15 +1,8 @@
 /// <reference types="vite/client" />
 import { createReadableStreamFromReadable } from "@react-router/node";
-
-import { createRequestHandler } from "react-router";
-import electron, {
-  app,
-  BrowserWindow,
-  ipcMain,
-  Menu,
-  protocol,
-} from "electron";
+import { app, BrowserWindow, ipcMain, Menu } from "electron";
 import log from "electron-log"; // write logs into ${app.getPath("logs")}/main.log without `/main`.
+import serve from "electron-serve";
 import ElectronStore from "electron-store";
 import mime from "mime";
 import { createReadStream, promises as fs } from "node:fs";
@@ -18,6 +11,7 @@ import { fileURLToPath } from "url";
 import { createServer, ViteDevServer } from "vite";
 import * as pkg from "../../package.json";
 import { setupAutoUpdater } from "./auto-update";
+import { setupTRPC } from "./trpc/setupTRPC";
 // log.initialize(); // inject a built-in preload script. https://github.com/megahertz/electron-log/blob/master/docs/initialize.md
 Object.assign(console, log.functions);
 
@@ -64,12 +58,18 @@ keys.forEach((key) => console.debug(`${key}:`, app.getPath(key)));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const directory = join(__dirname, "../renderer/client"); // This file is in the above (a). To point the `out`, move up twice.
+console.debug("loadURL: directory:", directory);
+const loadURL = serve({ directory });
+
 const isDev = !(global.process.env.NODE_ENV === "production" || app.isPackaged);
 console.debug("main: isDev:", isDev);
 console.debug("NODE_ENV:", global.process.env.NODE_ENV);
 console.debug("isPackaged:", app.isPackaged);
 
 const store = new ElectronStore<any>({ encryptionKey: "something" });
+
+setupTRPC();
 
 const createWindow = async (rendererURL: string) => {
   const bounds = store.get("bounds");
@@ -86,8 +86,12 @@ const createWindow = async (rendererURL: string) => {
     },
   });
 
-  console.debug("loadURL: rendererURL:", rendererURL);
-  win.loadURL(rendererURL);
+  if (isDev) {
+    console.debug("loadURL: rendererURL:", rendererURL);
+    win.loadURL(rendererURL);
+  } else {
+    loadURL(win);
+  }
 
   const boundsListener = () => {
     const bounds = win.getBounds();
@@ -100,48 +104,10 @@ const createWindow = async (rendererURL: string) => {
 };
 
 console.time("start whenReady");
-const rendererClientPath = join(__dirname, "../renderer/client");
 let viteServer: ViteDevServer;
-
-declare global {
-  var __electron__: typeof electron;
-}
 
 (async () => {
   await app.whenReady();
-  const serverBuild = isDev
-    ? null // serverBuild is not used in dev.
-    : await import(join(__dirname, "../renderer/server/index.js"));
-  protocol.handle("http", async (req) => {
-    const url = new URL(req.url);
-    if (
-      !["localhost", "127.0.0.1"].includes(url.hostname) ||
-      (url.port && url.port !== "80")
-    ) {
-      return await fetch(req);
-    }
-
-    req.headers.append("Referer", req.referrer);
-    try {
-      const res = await serveAsset(req, rendererClientPath);
-      if (res) {
-        return res;
-      }
-
-      const handler = createRequestHandler(serverBuild, "production");
-      return await handler(req, {
-        /* context */
-      });
-    } catch (err) {
-      console.warn(err);
-      const { stack, message } = toError(err);
-      return new Response(`${stack ?? message}`, {
-        status: 500,
-        headers: { "content-type": "text/html" },
-      });
-    }
-  });
-
   const rendererURL = await (isDev
     ? (async () => {
         viteServer = await createServer({
@@ -149,12 +115,10 @@ declare global {
           envDir: join(__dirname, "../.."), // load .env files from the root directory.
         });
         const listen = await viteServer.listen();
-        global.__electron__ = electron;
         viteServer.printUrls();
         return `http://localhost:${listen.config.server.port}`;
       })()
-    : "http://localhost");
-
+    : directory);
   const win = createWindow(rendererURL);
 
   app.on("activate", () => {
@@ -263,10 +227,6 @@ export async function serveAsset(
 
   const body = createReadableStreamFromReadable(createReadStream(fullPath));
   return new Response(body, { headers });
-}
-
-function toError(value: unknown) {
-  return value instanceof Error ? value : new Error(String(value));
 }
 
 // Reload on change.
