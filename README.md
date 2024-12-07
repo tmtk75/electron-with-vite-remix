@@ -109,4 +109,5 @@ dist/mac-${arch}/${app_name}.app/Contents/MacOS/${app_name}
 * [x] navigation history by pressing back/forward accelerators.
 * [x] typecheck
 * [x] environment variables, APP_PATH_ROOT and VITE_APP_PATH_ROOT.
+* [x] auto update with electron-updater.
 
