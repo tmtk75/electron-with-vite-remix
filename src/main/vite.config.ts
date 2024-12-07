@@ -13,6 +13,7 @@ export default defineConfig({
       external: [
         "electron",
         "electron-log",
+        "electron-serve",
         "electron-store",
         "electron-updater",
         ...[

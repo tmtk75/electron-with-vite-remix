@@ -3,5 +3,5 @@ import type {Config} from "@react-router/dev/config"
 export default {
   basename: "/",
   buildDirectory: "../../out/renderer",
-  ssr: true,
+  ssr: false,
 } satisfies Config
