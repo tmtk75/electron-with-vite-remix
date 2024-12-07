@@ -1,23 +1,18 @@
 import { NavLink } from "@remix-run/react";
 import { useEffect } from "react";
 import "./App.css";
-
-declare global {
-  interface Window {
-    ipc?: {
-      on: (channel: string, func: (...args: any[]) => void) => () => void;
-      invoke: (...args: any[]) => Promise<any>;
-    };
-  }
-}
+import { ipcTRPC } from "./trpc/TRPCReactProvider";
 
 const App = () => {
+  const getPath = ipcTRPC.ipc.sendSomething.useMutation();
+
   useEffect(() => {
-    if (!window.ipc) {
+    const api = globalThis?.window?.__$ipc__;
+    if (!api) {
       return;
     }
     console.debug("register.on");
-    const dispose = window.ipc.on("ping", function (...args) {
+    const dispose = api.on("ping", function (...args) {
       console.debug("ipc: main -> renderer", JSON.stringify(args));
     });
     return () => {
@@ -33,7 +28,7 @@ const App = () => {
       <div>
         <button
           onClick={async () => {
-            const v = await window.ipc?.invoke({ a: 1, b: 2 });
+            const v = await getPath.mutateAsync({ a: "hello", b: 123 });
             console.log({ v });
           }}
         >

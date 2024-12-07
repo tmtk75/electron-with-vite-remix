@@ -1,8 +1,8 @@
 # README
 A boilerplate for Electron + Vite + Remix.
-You can use Electron’s API within `loader` and `action`.
+You can use electron API through TRPC.
 
-No SSR version is available at a branch, [no-ssr](https://github.com/tmtk75/electron-with-vite-remix/tree/no-ssr).
+SSR version is on the [main branch](https://github.com/tmtk75/electron-with-vite-remix/).
 
 
 ## Getting Started
@@ -96,7 +96,7 @@ dist/mac-${arch}/${app_name}.app/Contents/MacOS/${app_name}
   - [x] dev-server works.
   - [x] vte:build works.
   - [x] build:unpack works.
-  - [x] SPA
+  - [x] SPA with TRPC.
   - [x] SSR
     * [x] vite-dev-server works.
     * ~~[x] assets served by express.~~ worked but deleted.
