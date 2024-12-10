@@ -2,6 +2,7 @@
 
 import { useLoaderData } from "@remix-run/react";
 import App from "../App";
+import { Button } from "../components/ui/button";
 // import log from "electron-log/renderer"; // TOOD: check how to effectively use electron-log in renderer
 
 const isDev = import.meta.env.DEV;
@@ -38,6 +39,7 @@ export default function Index() {
   return (
     <>
       {JSON.stringify(v)}
+      <Button onClick={() => alert("hi")}>OK</Button>
       <App />
     </>
   );
