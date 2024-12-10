@@ -5,9 +5,7 @@ export default {
   content: ["./src/renderer/app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      fontFamily: {
-        // sans: [\n          "Inter",\n          "ui-sans-serif",\n          "system-ui",\n          "sans-serif",\n          "Apple Color Emoji",\n          "Segoe UI Emoji",\n          "Segoe UI Symbol",\n          "Noto Color Emoji",\n        ]
-      },
+      fontFamily: {},
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
