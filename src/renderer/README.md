@@ -13,3 +13,12 @@ Then fix paths by replacing `@/app` with `../..`.
 -import { cn } from "@/app/lib/utils"
 +import { cn } from "../../lib/utils"
 ```
+
+## components by npx
+`npx shadcn@latest add [component] -c ../..`
+* [x] button
+* [x] input
+* [x] resizable
+* :no: sidebar : installed if I patched components.json
+* [x] label
+* [x] command

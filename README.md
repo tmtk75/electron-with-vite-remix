@@ -111,3 +111,12 @@ dist/mac-${arch}/${app_name}.app/Contents/MacOS/${app_name}
 * [x] environment variables, APP_PATH_ROOT and VITE_APP_PATH_ROOT.
 * [x] auto update with electron-updater.
 
+
+# Open Issues
+## Could not load *.css
+With `dev:renderer`, the following error occurs.
+```
+Could not load ${path-to}/electron-remix-shadcn/src/renderer/app/tailwind.css
+Could not load ${path-to}/electron-remix-shadcn/src/renderer/app/App.css
+```
+
