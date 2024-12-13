@@ -19,6 +19,28 @@ Then fix paths by replacing `@/app` with `../..`.
 * [x] button
 * [x] input
 * [x] resizable
-* :no: sidebar : installed if I patched components.json
 * [x] label
-* [x] command
+* [x] [command](https://ui.shadcn.com/docs/components/command)
+* [x] [sidebar](https://ui.shadcn.com/docs/components/sidebar) : can be installed if I patched components.json
+
+```
+diff --git a/components.json b/components.json
+index 0f2b9df..090c1fb 100644
+--- a/components.json
++++ b/components.json
+@@ -4,8 +4,8 @@
+   "rsc": false,
+   "tsx": true,
+   "tailwind": {
+-    "config": "./tailwind.config.ts",
+-    "css": "./app/tailwind.css",
++    "config": "./src/renderer/tailwind.config.ts",
++    "css": "./src/renderer/app/tailwind.css",
+     "baseColor": "neutral",
+     "cssVariables": true,
+     "prefix": ""
+@@ -18,4 +18,4 @@
+     "hooks": "app/hooks"
+   },
+   "iconLibrary": "lucide"
+```
