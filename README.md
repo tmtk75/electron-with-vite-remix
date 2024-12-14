@@ -120,3 +120,8 @@ Could not load ${path-to}/electron-remix-shadcn/src/renderer/app/tailwind.css
 Could not load ${path-to}/electron-remix-shadcn/src/renderer/app/App.css
 ```
 
+## "move to a new file" doesn't work
+https://x.com/tmtk75/status/18677407960715922675
+not working with typescript 5.7.2 + vscode 1.96.0
+I need to use 5.4.5 of typescript with I want to use "move to a new file" feature.
+
