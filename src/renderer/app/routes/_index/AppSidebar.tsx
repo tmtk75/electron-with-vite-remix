@@ -1,19 +1,26 @@
+//
+// https://ui.shadcn.com/docs/components/sidebar
+//
 import {
   Calendar,
   ChevronDown,
-  ChevronUp, Home, Inbox, Search,
-  Settings, User2
+  ChevronUp,
+  Home,
+  Inbox,
+  Search,
+  Settings,
+  User2,
 } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
-  CollapsibleTrigger
+  CollapsibleTrigger,
 } from "../../components/ui/collapsible";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
 import {
   Sidebar,
@@ -25,7 +32,7 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
 } from "../../components/ui/sidebar";
 
 // Menu items.
@@ -56,6 +63,7 @@ const items = [
     icon: Settings,
   },
 ];
+
 export function AppSidebar() {
   return (
     <Sidebar>
