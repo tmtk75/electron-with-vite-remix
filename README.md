@@ -67,6 +67,7 @@ dist/mac-${arch}/${app_name}.app/Contents/MacOS/${app_name}
 
 ## Variations
 * [shadcn/ui.sidebar-09](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-09): [shadcn/ui sidebar-09](https://ui.shadcn.com/blocks) is installed.
+* [shadcn/ui.sidebar-10](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-10): [shadcn/ui sidebar-10](https://ui.shadcn.com/blocks) is installed.
 
 
 ## TODO
