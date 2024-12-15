@@ -3,6 +3,7 @@
 import { useLoaderData } from "@remix-run/react";
 import App from "../App";
 import { Button } from "../components/ui/button";
+import Page from "../page";
 // import log from "electron-log/renderer"; // TOOD: check how to effectively use electron-log in renderer
 
 const isDev = import.meta.env.DEV;
@@ -36,11 +37,5 @@ export const loader = async () => {
 export default function Index() {
   const v = useLoaderData();
   console.debug("loaderData:", v);
-  return (
-    <>
-      {JSON.stringify(v)}
-      <Button onClick={() => alert("hi")}>OK</Button>
-      <App />
-    </>
-  );
+  return <Page />;
 }
