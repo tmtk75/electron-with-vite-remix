@@ -13,6 +13,13 @@ $ pnpm dev:main
 ```
 
 
+## Variations
+There are some variations of this boilerplate.
+* [shadcn/ui.sidebar-09](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-09): [shadcn/ui sidebar-09](https://ui.shadcn.com/blocks) is installed.
+* [shadcn/ui.sidebar-10](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-10): [shadcn/ui sidebar-10](https://ui.shadcn.com/blocks) is installed.
+
+
+
 ## Development
 There are three script tasks for development.
 * `dev:renderer`
@@ -64,10 +71,6 @@ For example, on macOS, it generates an executable as follows:
 ```
 dist/mac-${arch}/${app_name}.app/Contents/MacOS/${app_name}
 ```
-
-## Variations
-* [shadcn/ui.sidebar-09](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-09): [shadcn/ui sidebar-09](https://ui.shadcn.com/blocks) is installed.
-* [shadcn/ui.sidebar-10](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-10): [shadcn/ui sidebar-10](https://ui.shadcn.com/blocks) is installed.
 
 
 ## TODO
