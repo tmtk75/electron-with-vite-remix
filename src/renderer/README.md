@@ -61,3 +61,10 @@ index 2daa604..cc92b41 100644
      extend: {
        fontFamily: {},
 ```
+
+There is a helper script to tweak the paths.
+```bash
+$ cd ../..
+$ ./scripts/shadcn-ui-helper.sh tweak-paths
+```
+
