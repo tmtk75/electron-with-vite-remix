@@ -21,7 +21,7 @@ export default defineConfig({
         ],
         "node:fs", // without this, fs becomes null when imported. `import fs from "node:path"`
         "electron-store",
-        "@remix-run/node",
+        "@react-router/node",
         // "mime", // NOTE: don't enable. not working if it's external.
         "electron-updater",
       ],

@@ -10,7 +10,7 @@
     "dev:main_": "pnpm build:main --mode development && pnpm build:preload --mode development && electron out/main/index.mjs",
     "build:main": "vite build --config ./src/main/vite.config.ts",
     "build:preload": "vite build --config ./src/preload/vite.config.ts",
-    "build:renderer": "remix vite:build ./src/renderer",
+    "build:renderer": "react-router build ./src/renderer",
     "build:unpack": "pnpm build:renderer && pnpm build:main && pnpm build:preload && electron-builder --dir",
     "typecheck": "pnpm typecheck:main && pnpm typecheck:preload && pnpm typecheck:renderer",
     "typecheck:main": "tsc --noEmit -p ./src/main/tsconfig.json --composite false",
@@ -18,18 +18,18 @@
     "typecheck:renderer": "tsc --noEmit -p ./src/renderer/tsconfig.json --composite false"
   },
   "dependencies": {
-    "@remix-run/node": "^2.15.0",
-    "@remix-run/react": "^2.15.0",
+    "@react-router/node": "^7.1.1",
     "electron-log": "^5.2.4",
     "electron-store": "^10.0.0",
     "electron-updater": "^6.3.9",
     "mime": "^4.0.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router": "^7.1.1"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.15.0",
-    "@remix-run/serve": "^2.15.0",
+    "@react-router/dev": "^7.1.1",
+    "@react-router/serve": "^7.1.1",
     "@types/react": "^18.3.14",
     "@types/react-dom": "^18.3.2",
     "autoprefixer": "^10.4.20",
