@@ -1,7 +1,8 @@
 # README
-A boilerplate for Electron + Vite + Remix.
+A boilerplate for Electron + Vite + React Router v7 (framework mode).
 You can use Electron’s API within `loader` and `action`.
 
+TODO: update
 No SSR version is available at a branch, [no-ssr](https://github.com/tmtk75/electron-with-vite-remix/tree/no-ssr).
 
 
@@ -99,7 +100,7 @@ dist/mac-${arch}/${app_name}.app/Contents/MacOS/${app_name}
   - [x] dev:renderer
   - [x] dev:main
   - [x] build:unpack
-* [x] remix
+* [x] react-router v7
   - [x] dev-server works.
   - [x] vte:build works.
   - [x] build:unpack works.
@@ -110,7 +111,7 @@ dist/mac-${arch}/${app_name}.app/Contents/MacOS/${app_name}
     * [x] assets served by electron.
 * [x] dev/build variation
   - [x] dev:renderer -- to develop UI mainly with vite-dev-server.
-  - [x] dev:mainw -- to develop main process mainly with vite-dev-server.
+  - [x] dev:main -- to develop main process mainly with vite-dev-server.
   - [x] build:unpack -- to build unpacked app.
 * [x] logging with electron-log.
 * [x] navigation history by pressing back/forward accelerators.

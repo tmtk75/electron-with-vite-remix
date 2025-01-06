@@ -1,8 +1,7 @@
 /// <reference types="vite/client" />
-import {
-  createReadableStreamFromReadable,
-  createRequestHandler,
-} from "@remix-run/node";
+import { createReadableStreamFromReadable } from "@react-router/node";
+
+import { createRequestHandler } from "react-router";
 import electron, {
   app,
   BrowserWindow,

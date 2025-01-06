@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import App from "../App";
 // import log from "electron-log/renderer"; // TOOD: check how to effectively use electron-log in renderer
 
