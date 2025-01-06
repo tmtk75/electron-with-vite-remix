@@ -1,3 +1,7 @@
+>[!NOTE]
+> The repository name ends with remix but this now supports react-router v7
+> by https://github.com/tmtk75/electron-with-vite-remix/pull/2
+
 # README
 A boilerplate for Electron + Vite + React Router v7 (framework mode).
 You can use Electron’s API within `loader` and `action`.
