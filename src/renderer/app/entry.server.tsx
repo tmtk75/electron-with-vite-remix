@@ -17,7 +17,7 @@ export default function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  reactRouterContext: EntryContext,
+  remixContext: EntryContext,
   // This is ignored so we can keep it in the template for visibility.  Feel
   // free to delete this parameter in your app if you're not using it!
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -28,13 +28,13 @@ export default function handleRequest(
         request,
         responseStatusCode,
         responseHeaders,
-        reactRouterContext
+        remixContext
       )
     : handleBrowserRequest(
         request,
         responseStatusCode,
         responseHeaders,
-        reactRouterContext
+        remixContext
       );
 }
 
@@ -91,14 +91,14 @@ function handleBrowserRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext
+  reactRouterContext: EntryContext
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
     // console.log(request, responseStatusCode, responseHeaders, remixContext);
     const { pipe, abort } = renderToPipeableStream(
       <ServerRouter
-        context={remixContext}
+        context={reactRouterContext}
         url={request.url}
       />,
       {
