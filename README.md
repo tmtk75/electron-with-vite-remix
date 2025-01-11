@@ -6,7 +6,6 @@
 A boilerplate for Electron + Vite + React Router v7 (framework mode).
 You can use Electron’s API within `loader` and `action`.
 
-TODO: update
 No SSR version is available at a branch, [no-ssr](https://github.com/tmtk75/electron-with-vite-remix/tree/no-ssr).
 
 
@@ -20,8 +19,8 @@ $ pnpm dev:main
 
 ## Variations
 There are some variations of this boilerplate.
-* [shadcn/ui.sidebar-09](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-09): [shadcn/ui sidebar-09](https://ui.shadcn.com/blocks) is installed.
-* [shadcn/ui.sidebar-10](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-10): [shadcn/ui sidebar-10](https://ui.shadcn.com/blocks) is installed.
+* [shadcn/ui.sidebar-09](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-09): [shadcn/ui sidebar-09](https://ui.shadcn.com/blocks) is installed with react-router v7.
+* [shadcn/ui.sidebar-10](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-10): [shadcn/ui sidebar-10](https://ui.shadcn.com/blocks) is installed with Remix v2.
 
 
 
