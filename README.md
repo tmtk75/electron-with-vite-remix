@@ -1,7 +1,3 @@
->[!NOTE]
-> The repository name ends with remix but this now supports react-router v7
-> by https://github.com/tmtk75/electron-with-vite-remix/pull/2
-
 # README
 A boilerplate for Electron + Vite + React Router v7 (framework mode).
 You can use Electron’s API within `loader` and `action`.
@@ -104,7 +100,7 @@ dist/mac-${arch}/${app_name}.app/Contents/MacOS/${app_name}
   - [x] dev:renderer
   - [x] dev:main
   - [x] build:unpack
-* [x] react-router v7
+* [x] react-router
   - [x] dev-server works.
   - [x] vte:build works.
   - [x] build:unpack works.
@@ -122,4 +118,18 @@ dist/mac-${arch}/${app_name}.app/Contents/MacOS/${app_name}
 * [x] typecheck
 * [x] environment variables, APP_PATH_ROOT and VITE_APP_PATH_ROOT.
 * [x] auto update with electron-updater.
+
+
+# Open Issues
+## Could not load *.css
+With `dev:renderer`, the following error occurs.
+```
+Could not load ${path-to}/electron-remix-shadcn/src/renderer/app/tailwind.css
+Could not load ${path-to}/electron-remix-shadcn/src/renderer/app/App.css
+```
+
+## "move to a new file" doesn't work
+https://x.com/tmtk75/status/18677407960715922675
+not working with typescript 5.7.2 + vscode 1.96.0
+I need to use 5.4.5 of typescript with I want to use "move to a new file" feature.
 

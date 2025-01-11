@@ -42,13 +42,13 @@ function handleBotRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  reactRouterContext: EntryContext
+  remixContext: EntryContext
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
       <ServerRouter
-        context={reactRouterContext}
+        context={remixContext}
         url={request.url}
       />,
       {
@@ -91,14 +91,14 @@ function handleBrowserRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  reactRouterContext: EntryContext
+  remixContext: EntryContext
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
     // console.log(request, responseStatusCode, responseHeaders, remixContext);
     const { pipe, abort } = renderToPipeableStream(
       <ServerRouter
-        context={reactRouterContext}
+        context={remixContext}
         url={request.url}
       />,
       {

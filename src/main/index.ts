@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 import { createReadableStreamFromReadable } from "@react-router/node";
-
 import { createRequestHandler } from "react-router";
 import electron, {
   app,

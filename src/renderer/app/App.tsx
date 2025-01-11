@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Button } from "./components/ui/button";
 
 const App = () => {
   useEffect(() => {
@@ -17,17 +18,16 @@ const App = () => {
 
   return (
     <div className="text-sm">
-      <h2 className="font-bold">IPC is available</h2>
-      <div>IPC is available, too.</div>
-      <button
+      <Button
         onClick={async () => {
           const v = await window.ipc?.invoke({ a: 1, b: 2 });
           console.log({ v });
         }}
-        className="bg-blue-500 text-white p-2 rounded text-xs shadow-sm hover:bg-blue-600"
+        size="sm"
       >
         Send event
-      </button> to main through IPC.
+      </Button>{" "}
+      to main through IPC.
     </div>
   );
 };

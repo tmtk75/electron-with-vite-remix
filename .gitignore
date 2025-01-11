@@ -22,4 +22,7 @@ out
 # env
 .env
 .env.*
+
+# react-router
 .react-router/
+
