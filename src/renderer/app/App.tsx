@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Button } from "./components/ui/button";
 import { ipcTRPC } from "./trpc/TRPCReactProvider";
 
 const App = () => {
@@ -20,16 +21,15 @@ const App = () => {
 
   return (
     <div className="text-sm">
-      <h2 className="font-bold">IPC is available</h2>
-      <button
+      <Button
         onClick={async () => {
           const v = await getPath.mutateAsync({ a: "hello", b: 123 });
           console.log({ v });
         }}
-        className="bg-blue-500 text-white p-2 rounded text-xs shadow-sm hover:bg-blue-600"
+        size="sm"
       >
         Send event
-      </button>{" "}
+      </Button>{" "}
       to main through IPC on tRPC.
     </div>
   );

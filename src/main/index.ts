@@ -18,12 +18,9 @@ Object.assign(console, log.functions);
 console.debug("main: import.meta.env:", import.meta.env);
 
 (() => {
-  const root =
-    global.process.env.APP_PATH_ROOT ?? import.meta.env.VITE_APP_PATH_ROOT;
+  const root = global.process.env.APP_PATH_ROOT ?? import.meta.env.VITE_APP_PATH_ROOT;
   if (root === undefined) {
-    console.info(
-      "no given APP_PATH_ROOT or VITE_APP_PATH_ROOT. default path is used."
-    );
+    console.info("no given APP_PATH_ROOT or VITE_APP_PATH_ROOT. default path is used.");
     return;
   }
   if (!isAbsolute(root)) {
@@ -45,14 +42,7 @@ console.debug("main: import.meta.env:", import.meta.env);
 })();
 
 console.debug("appPath:", app.getAppPath());
-const keys: Parameters<typeof app.getPath>[number][] = [
-  "home",
-  "appData",
-  "userData",
-  "sessionData",
-  "logs",
-  "temp",
-];
+const keys: Parameters<typeof app.getPath>[number][] = ["home", "appData", "userData", "sessionData", "logs", "temp"];
 keys.forEach((key) => console.debug(`${key}:`, app.getPath(key)));
 
 const __filename = fileURLToPath(import.meta.url);
@@ -171,7 +161,7 @@ const setupMenu = (win: BrowserWindow): void => {
           },
         ],
       },
-    ])
+    ]),
   );
 };
 
@@ -203,10 +193,7 @@ app.on("before-quit", async (_event) => {
 });
 
 // serve assets built by vite.
-export async function serveAsset(
-  req: Request,
-  assetsPath: string
-): Promise<Response | undefined> {
+export async function serveAsset(req: Request, assetsPath: string): Promise<Response | undefined> {
   const url = new URL(req.url);
   const fullPath = join(assetsPath, decodeURIComponent(url.pathname));
   if (!fullPath.startsWith(assetsPath)) {

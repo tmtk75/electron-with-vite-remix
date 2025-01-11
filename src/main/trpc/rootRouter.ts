@@ -20,12 +20,10 @@ const ipc = t.router({
 
   loginItemSettings: t.procedure.query(() => app.getLoginItemSettings()),
 
-  sendSomething: t.procedure
-    .input(z.object({ a: z.string(), b: z.number() }))
-    .mutation(({ input }) => {
-      console.debug("sendSomething", input);
-      return input.b + 100;
-    }),
+  sendSomething: t.procedure.input(z.object({ a: z.string(), b: z.number() })).mutation(({ input }) => {
+    console.debug("sendSomething", input);
+    return input.b + 100;
+  }),
 });
 
 const root = initTRPC.create();

@@ -8,8 +8,7 @@ const channel: TRPCBridge.IPCChannelName = "electron:ipc:trpc";
 const ipc: TRPCBridge.ExposedIPCInstance = {
   trpc: (args) => ipcRenderer.invoke(channel, args),
   on(channel: string, func: Function) {
-    const f = (event: IpcRendererEvent, ...args: any[]) =>
-      func(...[event, ...args]);
+    const f = (event: IpcRendererEvent, ...args: any[]) => func(...[event, ...args]);
     console.debug("register listener", channel, f);
     ipcRenderer.on(channel, f);
     return () => {

@@ -1,9 +1,5 @@
 import logger from "electron-log";
-import type {
-  AppUpdater,
-  UpdateDownloadedEvent,
-  UpdateInfo,
-} from "electron-updater";
+import type { AppUpdater, UpdateDownloadedEvent, UpdateInfo } from "electron-updater";
 // NOTE: workaround to use electron-updater.
 import * as electronUpdater from "electron-updater";
 const autoUpdater: AppUpdater = (electronUpdater as any).default.autoUpdater;
@@ -20,12 +16,7 @@ export async function setupAutoUpdater() {
     logger.info("Update not available.");
   });
   autoUpdater.on("error", (err, msg) => {
-    logger.info(
-      "Error in auto-updater.",
-      JSON.stringify(err),
-      "message:",
-      JSON.stringify(msg)
-    );
+    logger.info("Error in auto-updater.", JSON.stringify(err), "message:", JSON.stringify(msg));
   });
   autoUpdater.on("update-downloaded", (event: UpdateDownloadedEvent) => {
     logger.info("Update downloaded.", formatUpdateDownloadedEvent(event));
@@ -41,14 +32,8 @@ export async function setupAutoUpdater() {
       logger.info("catch err:", err);
     });
     const start = async () => {
-      logger.info(
-        "electron-updater: autoUpdater started.",
-        autoUpdater.currentVersion.version
-      );
-      logger.info(
-        "electron-updater: isUpdaterActive:",
-        autoUpdater.isUpdaterActive()
-      );
+      logger.info("electron-updater: autoUpdater started.", autoUpdater.currentVersion.version);
+      logger.info("electron-updater: isUpdaterActive:", autoUpdater.isUpdaterActive());
       const updates = await autoUpdater.checkForUpdates();
       logger.info("checkForUpdates:", updates);
       if (!updates) {
@@ -65,12 +50,8 @@ export async function setupAutoUpdater() {
 
   autoUpdater.signals.login((i) => logger.info(i));
   autoUpdater.signals.progress((i) => logger.info("signal progress:", i));
-  autoUpdater.signals.updateCancelled((i) =>
-    logger.info("signal updateCancelled:", i)
-  );
-  autoUpdater.signals.updateDownloaded((i) =>
-    logger.info("signal updateDownloaded:", i)
-  );
+  autoUpdater.signals.updateCancelled((i) => logger.info("signal updateCancelled:", i));
+  autoUpdater.signals.updateDownloaded((i) => logger.info("signal updateDownloaded:", i));
 }
 
 function formatUpdateDownloadedEvent(event: UpdateDownloadedEvent): string {

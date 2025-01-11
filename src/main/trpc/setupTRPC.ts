@@ -35,12 +35,7 @@ async function resolveTRPCOperation(args: Operation<unknown>) {
       data,
     };
   } catch (err) {
-    console.error(
-      new Date().toISOString(),
-      "failed to callProcedure.",
-      { args },
-      err
-    );
+    console.error(new Date().toISOString(), "failed to callProcedure.", { args }, err);
     throw err;
   }
 }
