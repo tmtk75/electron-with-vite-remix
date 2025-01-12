@@ -19,8 +19,9 @@ $ pnpm dev:main
 
 ## Variations
 There are some variations of this boilerplate.
-* [shadcn/ui.sidebar-09](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-09): [shadcn/ui sidebar-09](https://ui.shadcn.com/blocks) is installed with react-router v7.
-* [shadcn/ui.sidebar-10](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-10): [shadcn/ui sidebar-10](https://ui.shadcn.com/blocks) is installed with Remix v2.
+* [shadcn/ui.sidebar-09](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-09): [shadcn/ui sidebar-09](https://ui.shadcn.com/blocks/sidebar) is installed with react-router v7.
+* [shadcn/ui.sidebar-10](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-10): [shadcn/ui sidebar-10](https://ui.shadcn.com/blocks/sidebar) is installed with react-router v7.
+* [shadcn/ui.sidebar-15.no-ssr](https://github.com/tmtk75/electron-with-vite-remix/tree/shadcn/ui.sidebar-15.no-ssr): [shadcn/ui sidebar-15](https://ui.shadcn.com/blocks/sidebar) is installed with react-router v7.
 
 
 
