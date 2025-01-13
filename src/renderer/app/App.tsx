@@ -1,6 +1,4 @@
-import { NavLink } from "react-router";
 import { useEffect } from "react";
-import "./App.css";
 
 declare global {
   interface Window {
@@ -27,20 +25,18 @@ const App = () => {
   });
 
   return (
-    <div className="content">
-      <h1>Vite with React</h1>
-      <p>Start building amazing things with Vite.</p>
-      <div>
-        <button
-          onClick={async () => {
-            const v = await window.ipc?.invoke({ a: 1, b: 2 });
-            console.log({ v });
-          }}
-        >
-          Send event to main
-        </button>{" "}
-        |<NavLink to="/welcome">Welcome</NavLink>
-      </div>
+    <div className="text-sm">
+      <h2 className="font-bold">IPC is available</h2>
+      <div>IPC is available, too.</div>
+      <button
+        onClick={async () => {
+          const v = await window.ipc?.invoke({ a: 1, b: 2 });
+          console.log({ v });
+        }}
+        className="bg-blue-500 text-white p-2 rounded text-xs shadow-sm hover:bg-blue-600"
+      >
+        Send event
+      </button> to main through IPC.
     </div>
   );
 };

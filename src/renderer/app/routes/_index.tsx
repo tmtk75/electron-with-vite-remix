@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { useLoaderData } from "react-router";
+import { NavLink, useLoaderData } from "react-router";
 import App from "../App";
 // import log from "electron-log/renderer"; // TOOD: check how to effectively use electron-log in renderer
 
@@ -34,11 +34,42 @@ export const loader = async () => {
 
 export default function Index() {
   const v = useLoaderData();
-  console.debug("loaderData:", v);
   return (
-    <>
-      {JSON.stringify(v)}
+    <main className="container mx-auto p-8 grid gap-4">
+      <div>
+        <h1 className="font-bold text-xl">
+          Electron + React Router + Vite + TailwindCSS
+        </h1>
+        <ul className="list-disc list-inside text-sm">
+          <li>Electron API is available in loader and action.</li>
+          <li>React Router framework.</li>
+          <li>Built by Vite.</li>
+          <li>Styled by TailwindCSS v3. (v4 will be supported)</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 className="font-bold">Given by Electron API</h2>
+        <p className="text-sm">
+          version:{" "}
+          <code className="bg-slate-200 p-1 rounded-sm text-[10px]">
+            {v.version}
+          </code>
+        </p>
+        <p className="text-sm">
+          userData:{" "}
+          <code className="bg-slate-200 p-1 rounded-sm text-[10px]">
+            {v.userData}
+          </code>
+        </p>
+      </div>
+
       <App />
-    </>
+
+      <div>
+        <h2 className="font-bold">Routing</h2>
+        <NavLink to="/welcome" className="hover:underline text-sm">To Welcome page</NavLink>
+      </div>
+    </main>
   );
 }
