@@ -1,9 +1,9 @@
 import { reactRouter } from "@react-router/dev/vite";
-import { defineConfig } from "vite";
+import { defineConfig, type PluginOption } from "vite";
 
 export default defineConfig({
   plugins: [
-    reactRouter(),
+    reactRouter() as PluginOption,
     // tsconfigPaths(), // no need to use this plugin. I don't like path aliases so much.
   ],
   build: {

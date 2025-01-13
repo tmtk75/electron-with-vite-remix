@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 
+import type { Route } from "./+types/_index";
 import { NavLink, useLoaderData } from "react-router";
 import App from "../App";
 // import log from "electron-log/renderer"; // TOOD: check how to effectively use electron-log in renderer
@@ -33,7 +34,7 @@ export const loader = async () => {
 };
 
 export default function Index() {
-  const v = useLoaderData();
+  const v: Route.MetaArgs["data"] = useLoaderData();
   return (
     <main className="container mx-auto p-8 grid gap-4">
       <div>
@@ -68,7 +69,9 @@ export default function Index() {
 
       <div>
         <h2 className="font-bold">Routing</h2>
-        <NavLink to="/welcome" className="hover:underline text-sm">To Welcome page</NavLink>
+        <NavLink to="/welcome" className="hover:underline text-sm">
+          To Welcome page
+        </NavLink>
       </div>
     </main>
   );
