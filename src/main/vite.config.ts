@@ -11,19 +11,19 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [
-        "vite",
         "electron",
+        "electron-log",
+        "electron-store",
+        "electron-updater",
         ...[
-          "electron-log",
           // electron-log uses fs internally
           "fs",
           "util",
         ],
         "node:fs", // without this, fs becomes null when imported. `import fs from "node:path"`
-        "electron-store",
-        "@react-router/node",
+        // "@react-router/node",
         // "mime", // NOTE: don't enable. not working if it's external.
-        "electron-updater",
+        "vite", // NOTE: viteDevServer is used in the src/main/index.ts. Not ideal, but needed for now.
       ],
       output: {
         dir: "out",

@@ -1,14 +1,5 @@
 import { useEffect } from "react";
 
-declare global {
-  interface Window {
-    ipc?: {
-      on: (channel: string, func: (...args: any[]) => void) => () => void;
-      invoke: (...args: any[]) => Promise<any>;
-    };
-  }
-}
-
 const App = () => {
   useEffect(() => {
     if (!window.ipc) {

@@ -171,7 +171,7 @@ declare global {
     let count = 0;
     setInterval(
       () => win.webContents.send("ping", `hello from main! ${count++}`),
-      60 * 1000
+      5 * 1000
     );
     ipcMain.handle("ipcTest", (event, ...args) =>
       console.debug("ipc: renderer -> main", { event, ...args })
