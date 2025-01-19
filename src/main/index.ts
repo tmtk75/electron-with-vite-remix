@@ -15,7 +15,6 @@ import mime from "mime";
 import { createReadStream, promises as fs } from "node:fs";
 import { dirname, isAbsolute, join } from "node:path";
 import { fileURLToPath } from "url";
-import { createServer, ViteDevServer } from "vite";
 import * as pkg from "../../package.json";
 import { setupAutoUpdater } from "./auto-update";
 // log.initialize(); // inject a built-in preload script. https://github.com/megahertz/electron-log/blob/master/docs/initialize.md
@@ -101,7 +100,6 @@ const createWindow = async (rendererURL: string) => {
 
 console.time("start whenReady");
 const rendererClientPath = join(__dirname, "../renderer/client");
-let viteServer: ViteDevServer;
 
 declare global {
   var __electron__: typeof electron;
@@ -142,19 +140,7 @@ declare global {
     }
   });
 
-  const rendererURL = await (isDev
-    ? (async () => {
-        viteServer = await createServer({
-          root: "./src/renderer",
-          envDir: join(__dirname, "../.."), // load .env files from the root directory.
-        });
-        const listen = await viteServer.listen();
-        global.__electron__ = electron;
-        viteServer.printUrls();
-        return `http://localhost:${listen.config.server.port}`;
-      })()
-    : "http://localhost");
-
+  const rendererURL = global.process.env.RENDERER_URL ?? "http://localhost";
   const win = createWindow(rendererURL);
 
   app.on("activate", () => {
@@ -214,27 +200,6 @@ const setupMenu = (win: BrowserWindow): void => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
-  }
-});
-
-//
-// take care of vite-dev-server.
-//
-app.on("before-quit", async (_event) => {
-  if (!viteServer) {
-    return;
-  }
-  // ref: https://stackoverflow.com/questions/68750716/electron-app-throwing-quit-unexpectedly-error-message-on-mac-when-quitting-the-a
-  // event.preventDefault();
-  try {
-    console.info("will close vite-dev-server.");
-    await viteServer.close();
-    console.info("closed vite-dev-server.");
-    // app.quit(); // Not working. causes recursively 'before-quit' events.
-    app.exit(); // Not working expectedly SOMETIMES. Still throws exception and macOS shows dialog.
-    // global.process.exit(0); // Not working well... I still see exceptional dialog.
-  } catch (err) {
-    console.error("failed to close Vite server:", err);
   }
 });
 

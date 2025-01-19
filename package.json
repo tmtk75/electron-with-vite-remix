@@ -5,9 +5,9 @@
   "type": "module",
   "main": "out/main/index.mjs",
   "scripts": {
-    "dev:renderer": "pnpm exec electron dev-server.mjs",
-    "dev:main": "NODE_ENV=development pnpm dev:main_",
-    "dev:main_": "pnpm build:main --mode development && pnpm build:preload --mode development && electron out/main/index.mjs",
+    "dev:renderer": "pnpm exec electron ./dev-server.mjs",
+    "dev:main": "NODE_ENV=development DEV_MAIN=true pnpm dev:main_",
+    "dev:main_": "pnpm build:main --mode development && pnpm build:preload --mode development && electron ./dev-server.mjs",
     "build:main": "vite build --config ./src/main/vite.config.ts",
     "build:preload": "vite build --config ./src/preload/vite.config.ts",
     "build:renderer": "react-router build ./src/renderer",
@@ -22,9 +22,10 @@
     "electron-log": "^5.2.4",
     "electron-store": "^10.0.0",
     "electron-updater": "^6.3.9",
+    "isbot": "^5.1.21",
     "mime": "^4.0.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19",
+    "react-dom": "^19",
     "react-router": "^7.1.3"
   },
   "devDependencies": {
@@ -36,7 +37,6 @@
     "autoprefixer": "^10.4.20",
     "electron": "^34",
     "electron-builder": "^25.1.8",
-    "isbot": "^5.1.21",
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
