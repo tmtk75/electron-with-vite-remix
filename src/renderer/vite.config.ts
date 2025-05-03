@@ -1,9 +1,11 @@
 import { reactRouter } from "@react-router/dev/vite";
 import { defineConfig, type PluginOption } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [
     reactRouter() as PluginOption,
+    tailwindcss(),
     // tsconfigPaths(), // no need to use this plugin. I don't like path aliases so much.
   ],
   build: {

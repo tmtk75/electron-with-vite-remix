@@ -24,7 +24,7 @@ const App = () => {
           const v = await window.ipc?.invoke({ a: 1, b: 2 });
           console.log({ v });
         }}
-        className="bg-blue-500 text-white p-2 rounded text-xs shadow-sm hover:bg-blue-600"
+        className="bg-blue-500 text-white p-2 rounded-sm text-xs shadow-xs hover:bg-blue-600"
       >
         Send event
       </button> to main through IPC.
