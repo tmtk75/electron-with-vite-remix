@@ -36,7 +36,7 @@ export default function Index() {
         <p className="text-sm">
           version:{" "}
           <code className="bg-slate-200 p-1 rounded-xs text-[10px]">
-            {v.version}
+          {getPath.data}{/* {v.version} */}
           </code>
         </p>
         <p className="text-sm">
