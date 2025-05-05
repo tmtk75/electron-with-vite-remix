@@ -1,5 +1,3 @@
-import type { TRPCProcedureType } from "@trpc/server";
-
 namespace IPCBridge {
   type ContextKeyName = "__$ipc__";
 
