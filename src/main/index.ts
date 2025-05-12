@@ -14,7 +14,7 @@ import ElectronStore from "electron-store";
 import mime from "mime";
 import { createReadStream, promises as fs } from "node:fs";
 import { dirname, isAbsolute, join } from "node:path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { createServer, ViteDevServer } from "vite";
 import * as pkg from "../../package.json";
 import { setupAutoUpdater } from "./auto-update";
@@ -111,7 +111,7 @@ declare global {
   await app.whenReady();
   const serverBuild = isDev
     ? null // serverBuild is not used in dev.
-    : await import(join(__dirname, "../renderer/server/index.js"));
+    : await import(pathToFileURL(join(__dirname, "../renderer/server/index.js")).href);
   protocol.handle("http", async (req) => {
     const url = new URL(req.url);
     if (
