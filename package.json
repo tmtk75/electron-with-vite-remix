@@ -12,6 +12,7 @@
     "build:preload": "vite build --config ./src/preload/vite.config.ts",
     "build:renderer": "react-router build ./src/renderer",
     "build:unpack": "pnpm build:renderer && pnpm build:main && pnpm build:preload && electron-builder --dir",
+    "build": "pnpm build:renderer && pnpm build:main && pnpm build:preload && electron-builder",
     "typecheck:main": "tsc --noEmit -p ./src/main/tsconfig.json --composite false",
     "typecheck:preload": "tsc --noEmit -p ./src/preload/tsconfig.json --composite false",
     "typecheck:renderer": "tsc --noEmit -p ./src/renderer/tsconfig.json --composite false",
