@@ -21,6 +21,8 @@ export default defineConfig({
           "util",
         ],
         "node:fs", // without this, fs becomes null when imported. `import fs from "node:path"`
+        "node:url",
+        "node:path",
         // "@react-router/node",
         // "mime", // NOTE: don't enable. not working if it's external.
         "vite", // NOTE: viteDevServer is used in the src/main/index.ts. Not ideal, but needed for now.
